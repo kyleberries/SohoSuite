@@ -78,21 +78,6 @@ function adbShell(command){
   .catch(function(err) {
     $('#console').text('Error: ', err)
   })};
-  
-  
-  function getProp(prop){
-  client.listDevices()
-  .then(function(devices) {
-    return Promise.map(devices, function(device) {
-      return client.getProperties(device.id, prop)
-    })
-  })
-  .then(function() {
-	fireOs = prop;
-    alert(prop);
-  })
-  .catch(function(err) {
-    $('.fireos').text('Error: ', err)
-  })};
+
   
   
