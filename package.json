@@ -1,37 +1,74 @@
 {
-  "main": ".html/index.html",
-  "name": "KindleSuite Alpha 4.0",
-  "description": "development of KS4",
-  "version": "4.0.0",
-  "keywords": [ "KindleSuite", "KFSOWI" ],
-  "window": {
-    "title": "KindleSuite4 demo",
-    "icon": ".icon/icon.png",
-    "toolbar": false,
-    "frame": true,
-    "width": 800,
-    "height": 700,
-    "position": "center",
-	"resizable": true,
-    "bugs": "kyle@kfsowi.com"	
+  "name": "nodewebkit",
+  "version": "0.10.2",
+  "description": "A installer for node-webkit",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shama/nodewebkit.git"
   },
-  "webkit": {
-    "plugin": false
+  "main": "index.js",
+  "bin": {
+    "nodewebkit": "bin/nodewebkit"
   },
-  "maintainers":[ {
-   "name": "Kyle Berry",
-   "email": "kyle@kfsowi.com",
-   "web": "https://plus.google.com/+KyleBerryGraphics"
-                   },
-				   {
-   "name": "Ivo Damjanovic",
-   "email": "ivo@kfsowi.com",
-   "web": "https://plus.google.com/+IvoDamjanovic"
-                   }],
-	"licenses": [
-   {
-       "type": "GPLv3",
-       "url": "http://www.gnu.org/licenses/gpl.html"
-   }
-]
+  "scripts": {
+    "postinstall": "node scripts/install.js",
+    "test": "node test/index.js"
+  },
+  "files": [
+    "lib",
+    "bin",
+    "scripts",
+    "index.js"
+  ],
+  "author": {
+    "name": "Kyle Robinson Young"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "rimraf": "^2.2.2",
+    "download": "^0.1.10",
+    "multimeter": "^0.1.1",
+    "yargs": "^1.2.1",
+    "semver": "^2.3.1"
+  },
+  "devDependencies": {
+    "request": "^2.30.0",
+    "tape": "^2.12.3"
+  },
+  "keywords": [
+    "node-webkit",
+    "webkit",
+    "installer",
+    "desktop",
+    "application"
+  ],
+  "gitHead": "7e6386e022f5d594e4a63dcbfde6b010fab1331a",
+  "bugs": {
+    "url": "https://github.com/shama/nodewebkit/issues"
+  },
+  "homepage": "https://github.com/shama/nodewebkit",
+  "_id": "nodewebkit@0.10.2",
+  "_shasum": "6d817a53123888df434265461322fc158551c913",
+  "_from": "nodewebkit@",
+  "_npmVersion": "1.4.20",
+  "_npmUser": {
+    "name": "shama",
+    "email": "kyle@dontkry.com"
+  },
+  "maintainers": [
+    {
+      "name": "shama",
+      "email": "kyle@dontkry.com"
+    },
+    {
+      "name": "af",
+      "email": "aaron.franks+npm@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "6d817a53123888df434265461322fc158551c913",
+    "tarball": "http://registry.npmjs.org/nodewebkit/-/nodewebkit-0.10.2.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/nodewebkit/-/nodewebkit-0.10.2.tgz"
 }
