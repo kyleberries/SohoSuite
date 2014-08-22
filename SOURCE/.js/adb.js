@@ -65,7 +65,38 @@ client.listDevices()
     $('#console').text('File upload complete.')
   })
   .catch(function(err) {
-    $('#console').text('Error: ', err.stack)
+    $('#console').text('Error: ', err)
+  })
+  client.kill();
+};
+
+
+function adbPull(local,kindle){
+client.listDevices()
+  .then(function(devices) {
+    return Promise.map(devices, function(device) {
+      return client.pull(device.id, local, kindle)
+        .then(function(transfer) {
+          return new Promise(function(resolve, reject) {
+            transfer.on('progress', function(stats) {
+              $('#console').text('[%s] Pulled %d bytes so far',
+                device.id,
+                stats.bytesTransferred)
+            })
+            transfer.on('end', function() {
+              $('#console').text('[%s] Pull complete', device.id)
+              resolve()
+            })
+            transfer.on('error', reject)
+          })
+        })
+    })
+  })
+  .then(function() {
+    $('#console').text('File download complete.')
+  })
+  .catch(function(err) {
+    $('#console').text('Error: ', err)
   })
   client.kill();
 };
@@ -86,6 +117,7 @@ function adbShell(command){
   })
   client.kill()
   };
+  
 
   
   function fbDown(){
