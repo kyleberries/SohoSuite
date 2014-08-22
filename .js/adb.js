@@ -129,5 +129,5 @@ sudo.exec('fastboot -i 0x1949 flash boot ./resources/11325.img', function(code, 
 };
 
 function rootTest(){
-terminal('fastboot -i 0x1949 wait-for-device continue')
+terminal('fastboot -i 0x1949 continue')
 };
