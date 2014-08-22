@@ -130,6 +130,7 @@ sudo.exec('fastboot -i 0x1949 flash boot ./resources/11325.img', function(code, 
 
 function rootTest(){
 fbDown();
+adbPush('./resources/test.txt','/sdcard/test.txt');
 //adbPush('./resources/root/su','/data/local/tmp/su');
 //adbPush('./resources/root/exploit','/data/local/tmp/exploit');
 //adbPush('./resources/root/rootme.sh','/data/local/tmp/rootme.sh');
