@@ -10,7 +10,7 @@
     "toolbar": false,
     "frame": true,
     "width": 800,
-    "height": 700,
+    "height": 500,
     "position": "center",
 	"resizable": true,
     "bugs": "kyle@kfsowi.com"	
