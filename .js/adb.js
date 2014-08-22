@@ -2,6 +2,7 @@ var sudo = require('shelljs');
 var Promise = require('bluebird');
 var adb = require('adbkit');
 var client = adb.createClient();
+
 function clearCache(){
 sudo.rm('-rf', './.js/cache/*');;
 };
@@ -28,7 +29,6 @@ client.listDevices()
   .catch(function(err) {
     $('#detector').text(err);
   })},100)};
-  
   
 function adbPush(local,kindle){
 client.listDevices()
@@ -60,7 +60,6 @@ client.listDevices()
   client.kill();
 };
 
-
 function adbPull(local,kindle){
 client.listDevices()
   .then(function(devices) {
@@ -90,7 +89,6 @@ client.listDevices()
   })
   client.kill();
 };
-  
  
 function adbShell(command){
   client.listDevices()
@@ -107,8 +105,6 @@ function adbShell(command){
   })
   client.kill()
   };
-  
-
   
 function fbDown(){
 adbShell('su -c mount -o remount rw, /system');
