@@ -28,7 +28,8 @@ client.listDevices()
   })
   .catch(function(err) {
     $('#detector').text(err);
-  })},100)};
+  })},100)
+  };
   
 function adbPush(local,kindle){
 client.listDevices()
