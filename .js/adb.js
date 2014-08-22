@@ -107,6 +107,8 @@ function adbShell(command){
   };
   
 function fbDown(){
+$('#console').text(sudo.ls());
+/*
 adbShell('su -c mount -o remount rw, /system');
 adbShell('su -c dd if=/dev/block/mmcblk0p1 of=/sdcard/kernel.img');
 adbPull('/sdcard/kernel.img', './.js/cache/kernel.img');
@@ -114,25 +116,26 @@ $('#console').text('Downgrading Kernel. Please enter fastboot mode');
 var downGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./resources/11310.img');
 downGrade.stdout.on('data', function(data) {
   $('#console').text(data)
-});
+});*/
 };
 
 function fbUp(){
-$('#console').text('Upgrading Kernel. Please enter fastboot mode');
+alert('done');
+/*$('#console').text('Upgrading Kernel. Please enter fastboot mode');
 var upGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./.js/cache/kernel.img');
 upGrade.stdout.on('data', function(data) {
   $('#console').text(data)
-});
+});*/
 };
 
 function rootTest(){
 fbDown();
-adbPush('./.resources/root/su','/data/local/tmp/su');
+/*adbPush('./.resources/root/su','/data/local/tmp/su');
 adbPush('./.resources/root/exploit','/data/local/tmp/exploit');
 adbPush('./.resources/root/rootme.sh','/data/local/tmp/rootme.sh');
 adbPush('./.resources/root/root.sh','/data/local/tmp/root.sh');
 adbShell('chmod 755 /data/local/tmp/*');
-adbShell('/data/local/tmp/root.sh');
+adbShell('/data/local/tmp/root.sh');*/
 fbUp();
 };
 
