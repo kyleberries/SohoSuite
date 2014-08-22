@@ -1,0 +1,57 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	<title>SohoSuite</title>
+	<!--Styles-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../.css/main.css">
+	<link href='http://fonts.googleapis.com/css?family=Days+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:100,400,700' rel='stylesheet' type='text/css'>
+     <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400,700italic|Yanone+Kaffeesatz:400,200|Cinzel:400,700|Open+Sans+Condensed:300,300italic' rel='stylesheet' type='text/css'>
+	<!--end styles-->
+	<!--Scripts-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../.js/pages.js"></script>
+	<script type="text/javascript" src="../.js/adb.js"></script>
+	<script type="text/javascript" src="../.js/jquery.js"></script>
+	<!--end scripts-->
+  </head>
+  
+  <body onload="kindleCheck();clearCache()"> 
+     <div id="wrapper" class="wrapper">
+	     <div id="headerWrap" class="headerWrap">
+		     <span onclick="window.location.reload()" class="header" id="header">(<b>So</b>)ho(<b>Su</b>)ite<span class="header version" style="font-size:15px">alpha_v0.5</span></span>
+		 </div>
+		 <div id="menuWrap" class="menuWrap">
+		     <ul id="menu" class="menu">
+			     <li><a href="#" id="rootLink">Root</a></li><br />
+				 <li><a href="#" id="restoreLink">Restore</a></li><br />
+				 <li  
+				 onmouseover="$(this).css('color','#3498db').css('text-shadow','1px 1px black')" 
+				 onmouseout="$(this).css('color','white').css('text-shadow','1px 1px black')" class="romLink">ROMs</li>
+					     <li class="toggle"><a href="#" id="iceLink">Ice</a></li>
+						 <li class="toggle"><a href="#" id="hellfireLink">HellFire</a></li>
+						 <li class="toggle"><a href="#" id="plasmaLink">Plasma</a></li>
+				 <br /></li>
+				 <li><a href="#" id="extrasLink">Extras</a></li>
+			 </ul>
+			 </ul>
+		 </div>
+		 <div id="contentWrap" class="contentWrap">
+		        <div id="detector" class="detector">
+				 <span style="text-shadow:1px 1px black">ERROR: detector not running...</span>
+				 </div>
+		 		 <div id="console" class="console">
+		 ADB CONSOLE...
+		 </div>
+		 <div 
+		 <div id="content" class="content">
+<p>In order to use this program you MUST meet the following requirements:</p><ul><li>2013 Amazon Kindle Fire HD 7" (KFSOWI)</li><li>A fastboot cable.</li>
+<li>A global adb/fastboot install. 
+        <ul><li>For Windows, download <a href="#" onclick="window.open('http://forum.xda-developers.com/showthread.php?t=2588979')">This Installer</a></li><li>For Ubuntu use: <pre>sudo apt-get install android-tools fastboot-tools</pre></li></ul></li></ul>		 
+		 </div>
+		 </div>
+	 </div>
+  </body> 
+</html>
