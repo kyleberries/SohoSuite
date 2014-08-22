@@ -1,3 +1,4 @@
+var sudo = require('shelljs');
 var Promise = require('bluebird');
 var whichOs = require('which-os');
 var adb = require('adbkit');
@@ -10,6 +11,10 @@ var fireOs;
 if(currentOs != -1) fastbootSuffix = ".cmd";
 else if(currentOs = -1) fastbootSuffix = ".sh";
 
+
+function clearCache(){
+sudo.rm('-rf', './.js/cache/*');;
+};
 
 function kindleCheck(){
      setInterval(function(){
@@ -35,9 +40,6 @@ client.listDevices()
   })},100)};
   
   
-  
-
-
 function adbPush(local,kindle){
 client.listDevices()
   .then(function(devices) {
@@ -84,5 +86,23 @@ function adbShell(command){
   })
   client.kill()
   };
+
+  
+  function fbDown(){
+adbShell('su -c mount -o remount rw, /system');
+adbShell('su -c dd if=/dev/block/mmcblk0p1 of=/sdcard/kernel.img');
+adbPull('/sdcard/kernel.img', './.js/cache/kernel.img');
+var downGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./.js/11310.img');
+downGrade.stdout.on('data', function(data) {
+  $('#console').text(data)
+});
+};
+
+function fbUp(){
+var upGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./.js/cache/kernel.img');
+upGrade.stdout.on('data', function(data) {
+  $('#console').text(data)
+});
+};
 
   
