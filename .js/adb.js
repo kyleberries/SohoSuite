@@ -107,7 +107,7 @@ function adbShell(command){
   };
   
 function fbDown(){
-sudo.exec('fastboot -i 0x1949 wait-for-device continue', function(code, output) {
+sudo.exec('fastboot -i 0x1949 continue', function(code, output) {
   $('#console').text(code);
   $('#console').text(output);
 });
