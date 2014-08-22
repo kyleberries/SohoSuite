@@ -107,6 +107,12 @@ function adbShell(command){
   client.kill()
   };
   
+  function terminal(command){
+sudo.exec(command, function(code, output) {
+  $('#console').text(output);
+});
+};
+
 function fbDown(){
 sudo.exec('fastboot -i 0x1949 flash boot ./resources/11310.img', function(code, output) {
   $('#console').text(output);
