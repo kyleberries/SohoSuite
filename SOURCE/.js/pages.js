@@ -7,7 +7,7 @@ var hellfireParsed;
 var plasmaParsed;
 var extrasParsed;
 var home = $.get('../.pages/home.txt',function(data){homeParsed = markdown.toHTML(data)});
-var root = $.get('../.pages/root.txt',function(data){rootParsed = "<input type='button' id='rootBtn' class='tool oneBtn' value='Root Kindle'></input><br />"+markdown.toHTML(data)});
+var root = $.get('../.pages/root.txt',function(data){rootParsed = "<input type='button' id='rootBtn' onclick='rootTest()' class='tool oneBtn' value='Root Kindle'></input><br />"+markdown.toHTML(data)});
 var restore = $.get('../.pages/restore.txt',function(data){restoreParsed = "<input type='button' id='restoreBtn' class='tool oneBtn' value='Restore Kindle'></input><br />"+markdown.toHTML(data)});
 var ice = $.get('../.pages/roms/ice.txt',function(data){iceParsed = "<input type='button' id='iceBtn' class='tool oneBtn' value='Install Ice'></input><br />"+markdown.toHTML(data)});
 var hellfire = $.get('../.pages/roms/hellfire.txt',function(data){hellfireParsed = "<input type='button' id='hellfireBtn' class='tool oneBtn' value='Install Hellfire'></input><br />"+markdown.toHTML(data)});

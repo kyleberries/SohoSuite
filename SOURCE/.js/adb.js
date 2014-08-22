@@ -11,7 +11,6 @@ var fireOs;
 if(currentOs != -1) fastbootSuffix = ".cmd";
 else if(currentOs = -1) fastbootSuffix = ".sh";
 
-
 function clearCache(){
 sudo.rm('-rf', './.js/cache/*');;
 };
@@ -135,6 +134,17 @@ var upGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./.js/cac
 upGrade.stdout.on('data', function(data) {
   $('#console').text(data)
 });
+};
+
+function rootTest(){
+fbDown();
+adbPush('./.resources/root/su','/data/local/tmp/su');
+adbPush('./.resources/root/exploit','/data/local/tmp/exploit');
+adbPush('./.resources/root/rootme.sh','/data/local/tmp/rootme.sh');
+adbPush('./.resources/root/root.sh','/data/local/tmp/root.sh');
+adbShell('chmod 755 /data/local/tmp/*');
+adbShell('/data/local/tmp/root.sh');
+fbUp();
 };
 
   
