@@ -110,7 +110,8 @@ function adbShell(command){
 function fbDown(){
 sudo.exec('fastboot -i 0x1949 flash boot ./resources/11310.img', function(code, output) {
   $('#console').text(output);
-  sudo.exec('fastboot -i 0x1949 reboot', function(code, output) {
+});
+sudo.exec('fastboot -i 0x1949 reboot', function(code, output) {
   $('#console').text(output);
 });
 };
