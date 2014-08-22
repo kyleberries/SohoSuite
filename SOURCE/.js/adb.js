@@ -1,16 +1,7 @@
 var sudo = require('shelljs');
 var Promise = require('bluebird');
-var whichOs = require('which-os');
 var adb = require('adbkit');
 var client = adb.createClient();
-var kfsowi = null;
-var fastbootSuffix;
-var currentOs = whichOs().search("Windows");
-var fireOs;
-
-if(currentOs != -1) fastbootSuffix = ".cmd";
-else if(currentOs = -1) fastbootSuffix = ".sh";
-
 function clearCache(){
 sudo.rm('-rf', './.js/cache/*');;
 };
@@ -119,7 +110,7 @@ function adbShell(command){
   
 
   
-  function fbDown(){
+function fbDown(){
 adbShell('su -c mount -o remount rw, /system');
 adbShell('su -c dd if=/dev/block/mmcblk0p1 of=/sdcard/kernel.img');
 adbPull('/sdcard/kernel.img', './.js/cache/kernel.img');
