@@ -2,7 +2,7 @@
   "main": ".html/index.html",
   "name": "SoSu",
   "description": "Kindle root tool",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "keywords": [ "SohoSuite", "KFSOWI", "Kindle", "Android" ],
   "window": {
     "title": "Created by: Kyle Berry",

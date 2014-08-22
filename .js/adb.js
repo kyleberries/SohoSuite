@@ -115,7 +115,7 @@ sudo.exec('fastboot -i 0x1949 flash boot ./resources/11310.img', function(code, 
 };
 
 function fbUp(){
-sudo.exec('fastboot -i 0x1949 flash boot ./resources/'+kernel+'.img', function(code, output) {
+sudo.exec('fastboot -i 0x1949 flash boot ./resources/11325.img', function(code, output) {
   $('#console').text(output);
 });
 };
