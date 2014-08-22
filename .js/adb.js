@@ -111,7 +111,7 @@ adbShell('su -c mount -o remount rw, /system');
 adbShell('su -c dd if=/dev/block/mmcblk0p1 of=/sdcard/kernel.img');
 adbPull('/sdcard/kernel.img', './.js/cache/kernel.img');
 $('#console').text('Downgrading Kernel. Please enter fastboot mode');
-var downGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./.js/11310.img');
+var downGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./resources/11310.img');
 downGrade.stdout.on('data', function(data) {
   $('#console').text(data)
 });
