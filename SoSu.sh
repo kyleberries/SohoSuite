@@ -1,3 +1,2 @@
-#!/usr/bin
-
+#!/bin/sh
 nw ./
