@@ -34,6 +34,9 @@ client.listDevices()
     $('#detector').text(err);
   })},100)};
   
+  
+  
+
 
 function adbPush(local,kindle){
 client.listDevices()
@@ -62,6 +65,7 @@ client.listDevices()
   .catch(function(err) {
     $('#console').text('Error: ', err.stack)
   })
+  client.kill();
 };
   
  
@@ -77,6 +81,8 @@ function adbShell(command){
   })
   .catch(function(err) {
     $('#console').text('Error: ', err)
-  })};
+  })
+  client.kill()
+  };
 
   
