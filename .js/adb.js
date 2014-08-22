@@ -107,7 +107,10 @@ function adbShell(command){
   };
   
 function fbDown(){
-$('#console').text(sudo.ls());
+sudo.exec('fastboot -i 0x1949 wait-for-device continue', function(code, output) {
+  $('#console').text(code);
+  $('#console').text(output);
+});
 /*
 adbShell('su -c mount -o remount rw, /system');
 adbShell('su -c dd if=/dev/block/mmcblk0p1 of=/sdcard/kernel.img');
@@ -120,7 +123,6 @@ downGrade.stdout.on('data', function(data) {
 };
 
 function fbUp(){
-alert('done');
 /*$('#console').text('Upgrading Kernel. Please enter fastboot mode');
 var upGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./.js/cache/kernel.img');
 upGrade.stdout.on('data', function(data) {
