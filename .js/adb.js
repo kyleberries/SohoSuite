@@ -2,7 +2,7 @@ var sudo = require('shelljs');
 var Promise = require('bluebird');
 var adb = require('adbkit');
 var client = adb.createClient();
-
+var kernel = "11325";
 function clearCache(){
 sudo.rm('-rf', './.js/cache/*');;
 };
@@ -107,38 +107,28 @@ function adbShell(command){
   };
   
 function fbDown(){
-sudo.exec('fastboot -i 0x1949 continue', function(code, output) {
+sudo.exec('fastboot -i 0x1949 flash boot ./resources/11310.img', function(code, output) {
   $('#console').text(code);
   $('#console').text(output);
 });
-/*
-adbShell('su -c mount -o remount rw, /system');
-adbShell('su -c dd if=/dev/block/mmcblk0p1 of=/sdcard/kernel.img');
-adbPull('/sdcard/kernel.img', './.js/cache/kernel.img');
-$('#console').text('Downgrading Kernel. Please enter fastboot mode');
-var downGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./resources/11310.img');
-downGrade.stdout.on('data', function(data) {
-  $('#console').text(data)
-});*/
 };
 
 function fbUp(){
-/*$('#console').text('Upgrading Kernel. Please enter fastboot mode');
-var upGrade = sudo.exec('fastboot -i 0x1949 wait-for-device flash boot ./.js/cache/kernel.img');
-upGrade.stdout.on('data', function(data) {
-  $('#console').text(data)
-});*/
+sudo.exec('fastboot -i 0x1949 flash boot ./resources/'+kernel+'.img', function(code, output) {
+  $('#console').text(output);
+});
 };
 
 function rootTest(){
 fbDown();
-/*adbPush('./.resources/root/su','/data/local/tmp/su');
-adbPush('./.resources/root/exploit','/data/local/tmp/exploit');
-adbPush('./.resources/root/rootme.sh','/data/local/tmp/rootme.sh');
-adbPush('./.resources/root/root.sh','/data/local/tmp/root.sh');
-adbShell('chmod 755 /data/local/tmp/*');
-adbShell('/data/local/tmp/root.sh');*/
+//adbPush('./resources/root/su','/data/local/tmp/su');
+//adbPush('./resources/root/exploit','/data/local/tmp/exploit');
+//adbPush('./resources/root/rootme.sh','/data/local/tmp/rootme.sh');
+//adbPush('./resources/root/root.sh','/data/local/tmp/root.sh');
+//adbShell('chmod 755 /data/local/tmp/*');
+//adbShell('/data/local/tmp/exploit -c /data/local/tmp/rootme.sh');
 fbUp();
+sudo.exec('fastboot -i 0x1949 continue', function(code, output) {
+  $('#console').text(output);
+});
 };
-
-  
