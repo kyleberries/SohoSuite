@@ -129,17 +129,5 @@ sudo.exec('fastboot -i 0x1949 flash boot ./resources/11325.img', function(code, 
 };
 
 function rootTest(){
-fbDown();
-adbPush('./resources/test.txt','/sdcard/test.txt');
-adbShell('su -c reboot');
-//adbPush('./resources/root/su','/data/local/tmp/su');
-//adbPush('./resources/root/exploit','/data/local/tmp/exploit');
-//adbPush('./resources/root/rootme.sh','/data/local/tmp/rootme.sh');
-//adbPush('./resources/root/root.sh','/data/local/tmp/root.sh');
-//adbShell('chmod 755 /data/local/tmp/*');
-//adbShell('/data/local/tmp/exploit -c /data/local/tmp/rootme.sh');
-fbUp();
-sudo.exec('fastboot -i 0x1949 continue', function(code, output) {
-  $('#console').text(output);
-});
+terminal('fastboot -i 0x1949 wait-for-device continue')
 };
