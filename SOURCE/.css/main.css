@@ -9,6 +9,7 @@ background: -webkit-linear-gradient(#d1dbbd,#fcfff5,#d1dbbd);
 	overflow:hidden;
 }
 .tool{
+  float:left;
   display:none;
   background: #3498db;
   background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
@@ -35,6 +36,7 @@ background: -webkit-linear-gradient(#d1dbbd,#fcfff5,#d1dbbd);
 	margin-left:30%;
 	font-family:Lobster Two;
 	color:#193441;
+	cursor:pointer;
 	   }
 .version{
 	margin-left:10%;
