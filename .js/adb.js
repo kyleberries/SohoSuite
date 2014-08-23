@@ -31,6 +31,13 @@ client.listDevices()
   })},100)
   };
   
+    function terminal(command){
+sudo.exec(command, function(code, output) {
+  $('#console').text(output);
+});
+};
+
+  
 function adbPush(local,kindle){
 client.listDevices()
   .then(function(devices) {
@@ -107,13 +114,7 @@ function adbShell(command){
   client.kill()
   };
   
-  function terminal(command){
-sudo.exec(command, function(code, output) {
-  $('#console').text(output);
-});
-};
-
-function fbDown(){
+/*function fbDown(){
 sudo.exec('fastboot -i 0x1949 flash boot ./resources/11310.img', function(code, output) {
   $('#console').text(output);
 });
@@ -126,7 +127,7 @@ function fbUp(){
 sudo.exec('fastboot -i 0x1949 flash boot ./resources/11325.img', function(code, output) {
   $('#console').text(output);
 });
-};
+};*/
 
 function rootTest(){
 terminal('fastboot -i 0x1949 devices')
