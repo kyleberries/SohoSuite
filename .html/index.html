@@ -45,8 +45,11 @@
 		 </div>
 		 <div 
 		 <div id="content" class="content scroll">
-		 <button onclick="adbCheck()" >adbCheck</button>
-		 <button onclick="fastbootCheck()" >fastbootCheck</button>	 
+		 <button onclick="adbCheck()" >adbCheck</button><br />
+		 <button onclick="fastbootCheck()" >fastbootCheck</button><br />
+		 <button onclick="adbPush('./resources/test.txt','/sdcard/push.txt')" >adbPush test.txt /sdcard/push.txt</button><br />
+		 <button onclick="adbPull('/system/build.prop','./resources/build.prop')" >adbPull /system/build.prop ./resources/build.prop</button><br />
+		 <button onclick="adbShell('su -c reboot')" >reboot (requires root)</button><br />		 
 		 </div>
 		 </div>
 	 </div>

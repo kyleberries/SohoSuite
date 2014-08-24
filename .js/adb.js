@@ -1,5 +1,5 @@
-var fbSerial;
-var adbSerial;
+var fbSerial = null
+var adbSerial = null
 function cmd(command,callback){
  require('child_process').exec(command,callback);
  }
@@ -11,13 +11,16 @@ sudo.rm('-rf', './.js/cache/*');
 $('#console').text('Cache cleared.');
 }; 
 function adbPush(local,kindle){
-
+   if(adbSerial !== null){cmd('adb push -s '+adbSerial+' '+local+' '+kindle,function(stdout){console(stdout)})}
+   else {throw new Error('xfer fail, or detection fail')}
 };
-function adbPull(local,kindle){
-
+function adbPull(kindle,local){
+   if(adbSerial !== null){cmd('adb pull -s '+adbSerial+' '+kindle+' '+local,function(stdout){console(stdout)})}
+   else {throw new Error('xfer fail, or detection fail')}
 };
 function adbShell(command){
- 
+    if(adbSerial !== null){cmd('adb shell -s '+command,function(stdout){console(stdout)})}
+   else {throw new Error('command fail, or detection fail')}
   }; 
 function fastbootCheck(){
  cmd('fastboot -i 0x1949 devices',function(stdout){
@@ -33,3 +36,4 @@ function adbCheck(){
 		                                 if(stdout != 'KFSOWI'){adbSerial = null}})}
 	  })
 };
+
