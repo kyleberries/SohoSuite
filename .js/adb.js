@@ -1,18 +1,18 @@
-var sudo = require('shelljs');
 var Promise = require('bluebird');
 var adb = require('adbkit');
 var client = adb.createClient();
-
+var cmd = require('child_process');
+var fbSerial;
+var adbSerial;
 function clearCache(){
 sudo.rm('-rf', './.js/cache/*');
 $('#console').text('Cache cleared.');
 };
-function adbCheck(){
+function OLDadbCheck(){
 client.listDevices()
   .then(function(devices) {
    if (devices.length <= 0) {$('.tool').css('display','block'); throw new Error('No Device Detected.')};
     return Promise.filter(devices, function(device) {
-		$('#console').css('text-shadow','1px 1px black');
       return client.getProperties(device.id)
         .then(function(properties) {
           if(properties['ro.product.model'] != "KFSOWI" && properties['ro.product.model'] != "") {	$('.tool').css('display','none');
@@ -103,11 +103,17 @@ function adbShell(command){
   client.kill()
   }; 
 function fastbootCheck(){
-require('child_process').exec('fastboot -i 0x1949 devices',function(stdout){
-if(stdout == null)
-   { $('#console').text('Error: No Fastboot Device Detected')}
+cmd.exec('fastboot -i 0x1949 devices',function(stdout){
+if(stdout == null) $('#console').text('Error: No Fastboot Device Detected');
 else if(stdout !== null)
    { command('fastboot -i 0x1949 devices', function(stdout){fbSerial = stdout.substr(0,16)})}
-  });
+  })
+};
+function adbCheck(){
+cmd.exec('fastboot -i 0x1949 devices',function(stdout){
+if(stdout == null) $('#console').text('Error: No Fastboot Device Detected');
+else if(stdout !== null)
+   { command('fastboot -i 0x1949 devices', function(stdout){fbSerial = stdout.substr(0,16)})}
+  })
 };
   
