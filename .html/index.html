@@ -16,11 +16,10 @@
 	<script type="text/javascript" src="../.js/adb.js"></script>
 	<script type="text/javascript" src="../.js/jquery.js"></script>
 	<script type="text/javascript" src="../.js/jquery.slimscroll.min.js"></script>
-	<script type="text/javascript" src="../.js/checks.js"></script>
 	<!--end scripts-->
   </head>
   
-  <body onload="kindleCheck();clearCache()"> 
+  <body onload=""> 
      <div id="wrapper" class="wrapper">
 	     <div id="headerWrap" class="headerWrap">
 		     <span onclick="window.location.reload()" class="header" id="header">(<b>So</b>)ho(<b>Su</b>)ite<span class="header version" style="font-size:15px">alpha_v0.5</span></span>
@@ -41,23 +40,13 @@
 			 </ul>
 		 </div>
 		 <div id="contentWrap" class="contentWrap">
-		        <div id="detector" class="detector">
-				 <span style="text-shadow:1px 1px black">ERROR: detector not running...</span>
-				 </div>
 		 		 <div id="console" class="console">
 		 ADB CONSOLE...
 		 </div>
 		 <div 
 		 <div id="content" class="content scroll">
 		 <button onclick="adbCheck()" >adbCheck</button>
-		 <button onclick="fastbootCheck()" >fastbootCheck</button>
-<p>In order to use this program you MUST meet the following requirements:</p><ul><li><span class='fastboot'>Fastboot Cable Required!!</span></li><li>2013 Amazon Kindle Fire HD 7" (KFSOWI)</li>
-<li>A global adb/fastboot install. 
-        <ul><li>For Windows, download <a href="#" onclick="window.open('http://forum.xda-developers.com/showthread.php?t=2588979')">This Installer</a></li><li><pre>
-Ubuntu:  apt-get install android-tools
-	      apt-get install fastboot-tools
-     Fedora:  yum install android-tools
-       Arch:  pacman -S android-tools</pre></li></ul></li></ul>		 
+		 <button onclick="fastbootCheck()" >fastbootCheck</button>	 
 		 </div>
 		 </div>
 	 </div>

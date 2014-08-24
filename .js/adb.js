@@ -2,18 +2,17 @@ var sudo = require('shelljs');
 var Promise = require('bluebird');
 var adb = require('adbkit');
 var client = adb.createClient();
-var kernel = "11325";
-function clearCache(){
-sudo.rm('-rf', './.js/cache/*');;
-};
 
-function kindleCheck(){
-     setInterval(function(){
+function clearCache(){
+sudo.rm('-rf', './.js/cache/*');
+$('#console').text('Cache cleared.');
+};
+function adbCheck(){
 client.listDevices()
   .then(function(devices) {
    if (devices.length <= 0) {$('.tool').css('display','block'); throw new Error('No Device Detected.')};
     return Promise.filter(devices, function(device) {
-		$('.detector').css('text-shadow','1px 1px black');
+		$('#console').css('text-shadow','1px 1px black');
       return client.getProperties(device.id)
         .then(function(properties) {
           if(properties['ro.product.model'] != "KFSOWI" && properties['ro.product.model'] != "") {	$('.tool').css('display','none');
@@ -22,22 +21,14 @@ client.listDevices()
     })
   })
   .then(function(supportedDevices) {
-    $('#detector').text('KFSOWI detected: '+ supportedDevices);
+    $('#console').text('KFSOWI detected: '+ supportedDevices);
 	$('.tool').css('display','block');
-	$('#detector').css('color','green');
+	$('#console').css('color','green');
   })
   .catch(function(err) {
-    $('#detector').text(err);
-  })},100)
-  };
-  
-    function terminal(command){
-sudo.exec(command, function(code, output) {
-  $('#console').text(output);
-});
-};
-
-  
+    $('#console').text(err);
+  })
+  };  
 function adbPush(local,kindle){
 client.listDevices()
   .then(function(devices) {
@@ -67,7 +58,6 @@ client.listDevices()
   })
   client.kill();
 };
-
 function adbPull(local,kindle){
 client.listDevices()
   .then(function(devices) {
@@ -97,7 +87,6 @@ client.listDevices()
   })
   client.kill();
 };
- 
 function adbShell(command){
   client.listDevices()
   .then(function(devices) {
@@ -112,23 +101,13 @@ function adbShell(command){
     $('#console').text('Error: ', err)
   })
   client.kill()
-  };
+  }; 
+function fastbootCheck(){
+require('child_process').exec('fastboot -i 0x1949 devices',function(stdout){
+if(stdout == null)
+   { $('#console').text('Error: No Fastboot Device Detected')}
+else if(stdout !== null)
+   { command('fastboot -i 0x1949 devices', function(stdout){fbSerial = stdout.substr(0,16)})}
+  });
+};
   
-/*function fbDown(){
-sudo.exec('fastboot -i 0x1949 flash boot ./resources/11310.img', function(code, output) {
-  $('#console').text(output);
-});
-sudo.exec('fastboot -i 0x1949 continue', function(code, output) {
-  $('#console').text(output);
-});
-};
-
-function fbUp(){
-sudo.exec('fastboot -i 0x1949 flash boot ./resources/11325.img', function(code, output) {
-  $('#console').text(output);
-});
-};*/
-
-function rootTest(){
-terminal('fastboot -i 0x1949 devices')
-};
