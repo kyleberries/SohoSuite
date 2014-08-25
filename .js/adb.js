@@ -51,8 +51,8 @@ else if(fbSerial==null)$('.fastboot').css('color','red');
 };
 function adbCheck(){
     cmd('adb devices',function(stdout){
-        if(stdout.length<30) throw Error('No device detected ',001);
-        else if(stdout.length>30) console(stdout);
+        if(stdout.length<30) {throw Error('No device detected ',001);$('.adb').css('color','red')}
+        else if(stdout.length>30) {console(stdout);$('.adb').css('color','green')}
 })
 }
 function root(){
