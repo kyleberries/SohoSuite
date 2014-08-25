@@ -16,6 +16,13 @@ background: -webkit-linear-gradient(#d1dbbd,#fcfff5,#d1dbbd);
     margin-right:12px;	
     margin-top:2px;	
 }
+.banner{
+  position:absolute;
+  z-index:2;
+  margin-left:90%;
+  margin-top:-10px;
+  height:110%;
+       }
 .toolbar:hover{
 height:27px;
 margin-top:0;
