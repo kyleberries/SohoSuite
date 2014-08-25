@@ -47,6 +47,7 @@
 		 <div 
 		 <div id="content" class="content scroll">
 		 <p>This requires adb/fastboot in your $PATH. <a onclick="window.open('http://forum.xda-developers.com/showthread.php?t=2588979')">Download here</a></p>
+		 		 <input type='button' class='tool' onclick="test('adb devices',function(stdout){console(stdout)})" value='Test'</input><br />
 		 <input type='button' class='tool' onclick="adbCheck()" value='adbCheck'</input>
 		 <input type='button' class='tool' onclick="fastbootCheck()" value='fastbootCheck'></input><br />
 		 <input type='button' class='tool' onclick="adbPush('./resources/test.txt','/sdcard/push.txt')" value='adbPush test.txt /sdcard/push.txt'></input><br />
