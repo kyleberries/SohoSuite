@@ -5,8 +5,10 @@ var fbSerial = null;
 var adbSerial = null;
 var exec = require('child_process').exec;
 
-function shutdown(){win.close(killAdb())};
-function mini(){win.unmaximize()};
+function shutdown(){
+win.close(killAdb())};
+function mini(){
+win.unmaximize()};
 function maxi(){
             if (win.isMaximized)
                { win.unmaximize();
@@ -59,13 +61,20 @@ function adbShell(command){
   }; 
 function adbCheck(){
     cmd('adb devices',function(stdout){
-        if(stdout.length<30) {throw Error('adb: No device detected.',001);$('.adb').css('color','red')}
-        else if(stdout.length>30) {console(stdout);$('.adb').css('color','green')}
-})
-}
+        if(stdout.length<30) {throw Error('adb >No device detected.',001);$('.adb').css('color','red')}
+        else if(stdout.length>30) {console(stdout.substr(30,40));
+		                           adbSerial = stdout.substr(30,40);
+								   cmd('adb shell getprop ro.product.model',function(stdout){
+								        if(stdout.match(/Soho/g)!=='Soho'){throw Error('adb >Wrong device! SoSu incompatible',003)}
+										else{console('adb >KFSOWI detected.');
+										      $('#console').css('color','red')}})
+								   }
+								  })
+};
+
 function fastbootCheck(){
     cmd('fastboot -i 0x1949 devices',function(stdout){
-        if(stdout.length<15) {throw Error('fastboot: No device detected.',002);$('.fastboot').css('color','red')}
+        if(stdout.length<15) {throw Error('fastboot >No device detected.',002);$('.fastboot').css('color','red')}
         else if(stdout.length>15) {console(stdout);$('.fastboot').css('color','green')}
 })
 };
