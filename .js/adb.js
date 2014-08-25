@@ -9,9 +9,11 @@ function shutdown(){win.close(killAdb())};
 function mini(){win.unmaximize()};
 function maxi(){
             if (win.isMaximized)
-                win.unmaximize();
+               { win.unmaximize();
+				$("#fullScreen").attr("src","../.icon/maximize.png");}
             else
-                win.maximize();
+              {  win.maximize();
+				$("#fullScreen").attr("src","../.icon/minimize.png");}
         };
 function cmd(command, callback) {
     var proc = exec(command);
