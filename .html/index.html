@@ -19,7 +19,7 @@
 	<!--end scripts-->
   </head>
   
-  <body onload=""> 
+  <body onload="detector()"> 
      <div id="wrapper" class="wrapper">
 	     <div id="headerWrap" class="headerWrap">
 		     <span onclick="window.location.reload()" class="header" id="header">(<b>So</b>)ho(<b>Su</b>)ite<span class="header version" style="font-size:15px">alpha_v0.5</span></span>
@@ -40,16 +40,17 @@
 			 </ul>
 		 </div>
 		 <div id="contentWrap" class="contentWrap">
+		 <div onclick='detector()' class="detector"><span class='adb'>ADB</span><span class="fastboot">FASTBOOT</span></div><br />
 		 		 <div id="console" class="console">
 		 ADB CONSOLE...
 		 </div>
 		 <div 
 		 <div id="content" class="content scroll">
-		 <button onclick="adbCheck()" >adbCheck</button><br />
-		 <button onclick="fastbootCheck()" >fastbootCheck</button><br />
-		 <button onclick="adbPush('./resources/test.txt','/sdcard/push.txt')" >adbPush test.txt /sdcard/push.txt</button><br />
-		 <button onclick="adbPull('/system/build.prop','./resources/build.prop')" >adbPull /system/build.prop ./resources/build.prop</button><br />
-		 <button onclick="adbShell('su -c reboot')" >reboot (requires root)</button><br />		 
+		 <input type='button' class='tool' onclick="adbCheck()" value='adbCheck'</input>
+		 <input type='button' class='tool' onclick="fastbootCheck()" value='fastbootCheck'></input><br />
+		 <input type='button' class='tool' onclick="adbPush('./resources/test.txt','/sdcard/push.txt')" value='adbPush test.txt /sdcard/push.txt'></input><br />
+		 <input type='button' class='tool' onclick="adbPull('/system/build.prop','./resources/build.prop')" value='adbPull /system/build.prop ./resources/build.prop'></input><br />
+		 <input type='button' class='tool' onclick="adbShell('su -c reboot')" value='reboot (requires root)'></input><br />		 
 		 </div>
 		 </div>
 	 </div>
