@@ -51,14 +51,10 @@ else if(fbSerial==null)$('.fastboot').css('color','red');
 };
 function adbCheck(){
     cmd('adb devices',function(stdout){
-	    var ret = stdout;
-        if(stdout.match(/device/) !=='device') throw Error('No device detected',001);
-        else if(stdout.match(/device/) =='device'){ adbSerial = stdout.substr(0,16);cmd('adb shell getprop ro.product.model', function(stdout){
-		                                 if(stdout != 'KFSOWI'){adbSerial = null}})}
-	  })
-	  if(adbSerial!==null){$('.adb').css('color','green');console('Adb Detected');}
-else if(adbSerial==null)$('.adb').css('color','red');
-};
+        if(stdout.length<30) throw Error('No device detected ',001);
+        else if(stdout.length>30) console(stdout);
+})
+}
 function root(){
 console('ROOT coming soon...');
 /*
