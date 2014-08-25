@@ -6,7 +6,6 @@
   "keywords": [ "SohoSuite", "KFSOWI", "Kindle", "Android" ],
   "window": {
     "title": "Created by: Kyle Berry",
-    "icon": ".icon/icon.png",
     "toolbar": false,
     "frame": false,
     "width": 750,
