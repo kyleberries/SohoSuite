@@ -37,3 +37,6 @@ function adbCheck(){
 	  })
 };
 
+process.on('uncaughtException', function (exception) {
+   console(exception)
+  });
