@@ -41,17 +41,14 @@ function fbFlash(kernel){
  //cmd('fastboot -s '+fbSerial+' boot '+kernel, function(stdout){}
 };
 function fastbootCheck(){
- cmd('fastboot -i 0x1949 devices',function(stdout){
-if(stdout == null||stdout=='') throw Error('No device detected',002);
-else if(stdout !== null$$stdout!==''){fbSerial = stdout.substr(0,16);cmd('fastboot -i 0x1949 getvar product',function(stdout){
-                                         if(stdout.match(/Soho/g) !== 'Soho'){fbSerial = null}})}
-  })
-  if(fbSerial!==null){$('.fastboot').css('color','green');console('Fastboot Detected');}
-else if(fbSerial==null)$('.fastboot').css('color','red');
+    cmd('fastboot -i 0x1949 devices',function(stdout){
+        if(stdout.length<15) {throw Error('No device detected [fb] ',002);$('.fastboot').css('color','red')}
+        else if(stdout.length>15) {console(stdout);$('.fastboot').css('color','green')}
+})
 };
 function adbCheck(){
     cmd('adb devices',function(stdout){
-        if(stdout.length<30) {throw Error('No device detected ',001);$('.adb').css('color','red')}
+        if(stdout.length<30) {throw Error('No device detected [adb]',001);$('.adb').css('color','red')}
         else if(stdout.length>30) {console(stdout);$('.adb').css('color','green')}
 })
 }
@@ -74,8 +71,9 @@ console('HELLFIRE coming soon...')
 function plasmaInstall(){
 console('PLASMA coming soon...')
 };
-
-
+function startAdb(){
+    cmd('adb devices',function(){})
+}
 
 
 
