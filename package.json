@@ -8,7 +8,7 @@
     "title": "Created by: Kyle Berry",
     "icon": ".icon/icon.png",
     "toolbar": false,
-    "frame": true,
+    "frame": false,
     "width": 800,
     "height": 500,
 	"min_width": 800,
