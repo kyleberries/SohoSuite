@@ -59,13 +59,13 @@ function adbShell(command){
   }; 
 function adbCheck(){
     cmd('adb devices',function(stdout){
-        if(stdout.length<30) {throw Error('No device detected [adb]',001);$('.adb').css('color','red')}
+        if(stdout.length<30) {throw Error('adb: No device detected.',001);$('.adb').css('color','red')}
         else if(stdout.length>30) {console(stdout);$('.adb').css('color','green')}
 })
 }
 function fastbootCheck(){
     cmd('fastboot -i 0x1949 devices',function(stdout){
-        if(stdout.length<15) {throw Error('No device detected [fb] ',002);$('.fastboot').css('color','red')}
+        if(stdout.length<15) {throw Error('fastboot: No device detected.',002);$('.fastboot').css('color','red')}
         else if(stdout.length>15) {console(stdout);$('.fastboot').css('color','green')}
 })
 };
@@ -99,5 +99,6 @@ console('PLASMA coming soon...')
             win.isMaximized = false;
         });           
 		   process.on('uncaughtException', function (exception) {
-   console(exception)
+   $('#console').css('color','red');
+   console(exception);
   }); 
