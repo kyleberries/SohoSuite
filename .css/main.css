@@ -13,7 +13,13 @@ background: -webkit-linear-gradient(#d1dbbd,#fcfff5,#d1dbbd);
     -webkit-app-region: no-drag;
 	 height:25px;
      cursor:pointer;
-    margin-right:10px;	 
+    margin-right:12px;	
+    margin-top:2px;	
+}
+.toolbar:hover{
+height:27px;
+margin-top:0;
+margin-right:10px;	
 }
 .fastboot{margin-left:10%;}
 .tool{
