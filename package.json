@@ -9,12 +9,12 @@
     "icon": ".icon/icon.png",
     "toolbar": false,
     "frame": false,
-    "width": 800,
+    "width": 750,
     "height": 550,
-	"min_width": 800,
-    "min_height": 550,
+	"min-height":395,
+    "min-width":578,
     "position": "center",
-	"resizable": false,
+	"resizable": true,
     "bugs": "kyle@kfsowi.com"	
   },
   "webkit": {

@@ -97,7 +97,7 @@ console('PLASMA coming soon...')
         });
             win.on('unmaximize', function(){
             win.isMaximized = false;
-        });
-            process.on('uncaughtException', function (exception) {
+        });           
+		   process.on('uncaughtException', function (exception) {
    console(exception)
   }); 
