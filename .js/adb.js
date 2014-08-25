@@ -90,7 +90,6 @@ function plasmaInstall(){
 console('PLASMA coming soon...')
 };
 
-
 	        win.on('maximize', function(){
             win.isMaximized = true;
         });
