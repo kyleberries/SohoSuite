@@ -11,32 +11,10 @@ background: -webkit-linear-gradient(#d1dbbd,#fcfff5,#d1dbbd);
 .window{-webkit-app-region: drag}
 .toolbar {
     -webkit-app-region: no-drag;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #63b8ee), color-stop(1, #468ccf) );
-	-webkit-border-top-left-radius:40px;
-	-webkit-border-top-right-radius:40px;
-	-webkit-border-bottom-right-radius:40px;
-	-webkit-border-bottom-left-radius:40px;
-	display:inline-block;
-	color:#14396a;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	font-style:normal;
-	height:32px;
-	line-height:32px;
-	width:33px;
-	text-decoration:none;
-	text-align:center;
-	text-shadow:1px 1px 0px #7cacde;
+	 height:25px;
+     cursor:pointer;
+    margin-right:10px;	 
 }
-.toolbar:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #468ccf), color-stop(1, #63b8ee) );
-	background-color:#468ccf;
-}.toolbar:active {
-	position:relative;
-	top:1px;
-}
-/* This button was generated using CSSButtonGenerator.com */
 .fastboot{margin-left:10%;}
 .tool{
   float:left;

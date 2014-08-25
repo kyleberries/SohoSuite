@@ -6,7 +6,7 @@ var adbSerial = null;
 var exec = require('child_process').exec;
 
 function shutdown(){win.close(killAdb())};
-function mini(){win.minimize()};
+function mini(){win.unmaximize()};
 function maxi(){
             if (win.isMaximized)
                 win.unmaximize();
