@@ -172,7 +172,7 @@ fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
             win.isMaximized = false;
         });  
  fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
-   var devCheck = "<input type='button' value='ADB Devices' onclick='adbCheck()' class='tool' /><input type='button' value='FASTBOOT Devices' onclick='fastbootCheck' class='tool' />";
+   var devCheck = "<input type='button' value='ADB Devices' onclick='adbCheck()' class='tool' /><input type='button' value='FASTBOOT Devices' onclick='fastbootCheck()' class='tool' />";
   if (err) {
     throw Error('SoSu >Cannot load page. '+err,004);
   }
