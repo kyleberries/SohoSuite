@@ -1,0 +1,6 @@
+* The current Factory Restore version is: **11.3.2.5**  
+* **Restoring requires a *fastboot* cable.**
+###What is Restoring?     
+
+Restoring here refers to the process of **erasing** all userdata, and **overwriting** the existing system with the most recent rootable stock image.  
+Restoring **will** unroot your device.

@@ -1,0 +1,17 @@
+SohoSuite is a program designed to root and modify the 2013 Kindle Fire HD 7".    
+To use SoSu you will need to have a few things...
+   
+**A *fastboot* cable**   
+**``ADB`` and ``FASTBOOT`` in your ``PATH``**  
+
+####To install ADB/FASTBOOT
+* Windows  
+  *  ``link to xda``
+* Ubuntu
+  *  ``apt-get install android-tools fastboot-tools``
+* Arch
+  *  ``command``
+* Fedora
+  *  ``command``
+* SuSe
+  *  ``command``
