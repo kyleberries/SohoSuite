@@ -119,16 +119,20 @@ fs.readFile(file, 'utf8', function (err,data) {
 });
 };
 $(document).ready(function(){
-  $('.romLink').click(function(){$('.toggle').toggle('slow')});
+  $('.romLink').click(function(){
+  page('./.html/submitROM.txt','submitROM','Submit a ROM');
+  $('.toggle').slideDown('slow')});
   $(function(){$('.scroll').slimScroll({height: '320px'});});
     $('#content').html(homeParsed);
     $("#rootLink").click(function(){
 	      $('#content').hide();
+		  $('.toggle').slideUp('slow');
 	      page('./.html/root.txt','root','Root Kindle');
 		  $('#content').fadeIn();
 		  });
     $("#restoreLink").click(function(){
 	      $('#content').hide();
+		  $('.toggle').slideUp('slow');
 	      page('./.html/restore.txt','restore','Restore Kindle');
 		  $('#content').fadeIn();
 	      });
@@ -149,10 +153,12 @@ $(document).ready(function(){
 		  });
 	$("#extrasLink").click(function(){
 	      $('#content').hide();
+		  $('.toggle').slideUp('slow');
 	      page('./.html/extras.txt','extras','N/A');
 		  $('#content').fadeIn();
 		  });
 	$("#header").click(function(){
+	$('.toggle').slideUp('slow');
 fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
    var devCheck = "<input type='button' value='ADB Devices' onclick='adbCheck()' class='tool' /><input type='button' value='FASTBOOT Devices' onclick='fastbootCheck()' class='tool' />";
   if (err) {
