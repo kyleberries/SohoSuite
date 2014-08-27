@@ -62,10 +62,12 @@ console('Cache cleared.');
 }; 
    //adb server
 function startAdb(){
+    cmd('adb start-server',function(){var x = null;})
     cmd('adb devices',function(stdout){
+	                                if(stdout.match(/recog/g) == 'recog') {alert('ADB not in PATH. Server not started.')}
 	                               $('#bootAnim').delay(3000).fadeOut(500);
                                    $('.bootLoad').delay(3000).toggle(10);
-								   if(stdout.match(/recog/g) == 'recog') alert('ADB not in PATH. Server not started.')})
+								   })
 }
 function killAdb(){
     cmd('adb kill-server',function(){})
