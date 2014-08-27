@@ -62,7 +62,10 @@ console('Cache cleared.');
 }; 
    //adb server
 function startAdb(){
-    cmd('adb devices',function(){})
+    cmd('adb devices',function(stdout){
+	                               $('#bootAnim').delay(3000).fadeOut(500);
+                                   $('.bootLoad').delay(3000).toggle(10);
+								   if(stdout.match(/recog/g) == 'recog') alert('ADB not in PATH. Server not started.')})
 }
 function killAdb(){
     cmd('adb kill-server',function(){})
@@ -119,8 +122,6 @@ fs.readFile(file, 'utf8', function (err,data) {
 });
 };
 $(document).ready(function(){
-  $('#bootAnim').delay(2000).fadeOut(500);
-  $('.bootLoad').delay(2000).toggle(10);
   $('.romLink').click(function(){
   page('./.html/submitROM.txt','submitROM','Submit a ROM');
   $('.toggle').slideDown('slow')});
