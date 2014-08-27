@@ -67,6 +67,7 @@ function startAdb(){
 	                                if(stdout.match(/recog/g) == 'recog') {alert('ADB not in PATH. Server not started.')}
 	                               $('#bootAnim').delay(3000).fadeOut(500);
                                    $('.bootLoad').delay(3000).toggle(10);
+								   setTimeout(function(){win.resizeTo(750, 500);win.moveTo(screen.width/2-300,screen.height/2-250)},3500);
 								   })
 }
 function killAdb(){

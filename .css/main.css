@@ -21,11 +21,12 @@ margin-left:auto;
 margin-right:auto;
 }
 .window{-webkit-app-region: drag}
+.max{display:none}
 .toolbar {
     -webkit-app-region: no-drag;
 	 height:25px;
      cursor:pointer;
-    margin-right:12px;	
+    margin-left:95%;	 
     margin-top:2px;	
 }
 .banner{

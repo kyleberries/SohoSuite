@@ -8,12 +8,12 @@
     "title": "Created by: Kyle Berry",
     "toolbar": false,
     "frame": false,
-    "width": 750,
-    "height": 550,
+    "width": 150,
+    "height": 100,
 	"min-height":395,
     "min-width":578,
     "position": "center",
-	"resizable": true,
+	"resizable": false,
     "bugs": "kyle@kfsowi.com"	
   },
   "webkit": {
