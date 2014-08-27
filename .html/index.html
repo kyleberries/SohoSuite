@@ -18,6 +18,8 @@
   </head>
   
   <body onload="startAdb()"> 
+  <span class='bootLoad'>SoSu Loading...</span>
+  <img class='bootAnim' id='bootAnim' src='../.icon/bootAnim.gif'></img>
   <!--img class='banner' src="../.icon/banner.png"></img-->
      <div id="wrapper" class="wrapper">
 	    <div id='window' class='window'>
@@ -38,7 +40,8 @@
 						 <li class="toggle"><a href="#" id="hellfireLink">HellFire</a></li>
 						 <li class="toggle"><a href="#" id="plasmaLink">Plasma</a></li>
 				 <br /></li>
-				 <li><a href="#" id="extrasLink">Extras</a></li>
+				 <li><a href="#" id="extrasLink">Extras</a></li><br />
+				 <li><a href="#" onclick='window.location.reload()'>Reboot SoSu</a></li>
 			 </ul>
 			 </ul>
 		 </div>

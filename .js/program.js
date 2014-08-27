@@ -119,6 +119,8 @@ fs.readFile(file, 'utf8', function (err,data) {
 });
 };
 $(document).ready(function(){
+  $('#bootAnim').delay(2000).fadeOut(500);
+  $('.bootLoad').delay(2000).toggle(10);
   $('.romLink').click(function(){
   page('./.html/submitROM.txt','submitROM','Submit a ROM');
   $('.toggle').slideDown('slow')});
@@ -170,7 +172,7 @@ fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
   });
 		  
 });
-//ONLOAD
+//BEFORELOAD
 	        win.on('maximize', function(){
             win.isMaximized = true;
         });
@@ -184,7 +186,8 @@ fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
   }
   $('#content').html(markdown.toHTML(data));
   $('#buttonWrap').html(devCheck);
-    });		
+    });	
+	
 		   process.on('uncaughtException', function (exception) {
    $('#console').css('color','red');
    console(exception);

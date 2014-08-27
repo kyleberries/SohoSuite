@@ -8,6 +8,18 @@ background: -webkit-linear-gradient(#d1dbbd,#fcfff5,#d1dbbd);
 	text-shadow:1px 1px white;
 	overflow:hidden;
 }
+.bootAnim{
+margin-left:-20px;
+margin-top:-20px;
+width:120%;
+height:120%;
+}
+.bootLoad{
+position:absolute;
+z-index:1;
+margin-left:auto;
+margin-right:auto;
+}
 .window{-webkit-app-region: drag}
 .toolbar {
     -webkit-app-region: no-drag;
