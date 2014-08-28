@@ -28,7 +28,8 @@ var exec = require('child_process').exec;
    //tools
    //window control
 function shutdown(){
-win.close(killAdb())};
+win.close(killAdb());
+this.close(true)};
 function mini(){
 win.unmaximize()};
 function maxi(){
