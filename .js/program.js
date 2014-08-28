@@ -11,8 +11,8 @@ var hellfireParsed;
 var plasmaParsed;
 var extrasParsed;
 var home = $.get('../.pages/home.txt',function(data){homeParsed = markdown.toHTML(data)});
-var root = $.get('../.pages/root.txt',function(data){rootParsed = "<input type='button' id='rootBtn' onclick='root()' class='tool oneBtn' value='Root Kindle'></input><br />"+markdown.toHTML(data)});
-var restore = $.get('../.pages/restore.txt',function(data){restoreParsed = "<input type='button' id='restoreBtn' onclick='restore()' class='tool oneBtn' value='Restore Kindle'></input><br />"+markdown.toHTML(data)});
+var root = $.get('../.pages/root.txt',function(data){rootParsed = "<input type='button' id='rootBtn' onclick='rootInstall()' class='tool oneBtn' value='Root Kindle'></input><br />"+markdown.toHTML(data)});
+var restore = $.get('../.pages/restore.txt',function(data){restoreParsed = "<input type='button' id='restoreBtn' onclick='restoreInstall()' class='tool oneBtn' value='Restore Kindle'></input><br />"+markdown.toHTML(data)});
 var ice = $.get('../.pages/roms/ice.txt',function(data){iceParsed = "<input type='button' onclick='iceInstall()' id='iceBtn' class='tool oneBtn' value='Install Ice'></input><br />"+markdown.toHTML(data)});
 var hellfire = $.get('../.pages/roms/hellfire.txt',function(data){hellfireParsed = "<input type='button' onclick='hellfireInstall()' id='hellfireBtn' class='tool oneBtn' value='Install Hellfire'></input><br />"+markdown.toHTML(data)});
 var plasma = $.get('../.pages/roms/plasma.txt',function(data){plasmaParsed = "<input type='button' onclick='plasmaInstall()' id='plasmaBtn' class='tool oneBtn' value='Install Plasma'></input><br />"+markdown.toHTML(data)});
@@ -25,6 +25,7 @@ win.isMaximized = false;
 var fbSerial = null;
 var exec = require('child_process').exec;
 //FUNCTIONS
+   //tools
    //window control
 function shutdown(){
 win.close(killAdb())};
@@ -67,7 +68,7 @@ function startAdb(){
 	                                if(stdout.match(/recog/g) == 'recog') {alert('ADB not in PATH. Server not started.')}
 	                               $('#bootAnim').delay(3000).fadeOut(500);
                                    $('.bootLoad').delay(3000).toggle(10);
-								   setTimeout(function(){win.resizeTo(750, 500);win.moveTo(screen.width/2-300,screen.height/2-250)},3500);
+								   setTimeout(function(){window.resizeTo(750, 500);window.moveTo(screen.width/2-300,screen.height/2-250);win.show();},3500);
 								   })
 }
 function killAdb(){
@@ -112,8 +113,6 @@ function fastbootCheck(){
 function fbFlash(kernel){
  //cmd('fastboot -s '+fbSerial+' boot '+kernel, function(stdout){}
 };
-   //tools
-
 //JQUERY
 function page(file,tool,btnvalue){
 fs.readFile(file, 'utf8', function (err,data) {
