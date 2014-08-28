@@ -96,16 +96,19 @@ function adbCheck(){
         if(stdout.length<30) {throw Error('adb >No device detected.',001);$('.adb').css('color','red')}
         else if(stdout.length>30) {console(stdout.substr(30,40));
 		                           adbSerial = stdout.substr(30,40);
-								   cmd('adb shell getprop ro.product.model',function(stdout) {console('adb >'+stdout+' detected.');
-										      $('#console').css('color','red')})
+								   cmd('adb shell getprop ro.product.model',function(stdout){
+								        if(stdout.match(/KFSOWI/g)!=='KFSOWI'){throw Error('adb >Wrong device! SoSu incompatible',003)}
+										else{console('adb >KFSOWI detected.');
+										      $('#console').css('color','red')}})
 								   }
 								  })
 };
 function fastbootCheck(){
+setTimeout(
     cmd('fastboot -i 0x1949 devices',function(stdout){
         if(stdout.length<15) {throw Error('fastboot >No device detected.',002);$('.fastboot').css('color','red')}
         else if(stdout.length>15) {console(stdout);$('.fastboot').css('color','green')}
-})
+}),1000)
 };
    //kernel swap
 function fbFlash(kernel){
