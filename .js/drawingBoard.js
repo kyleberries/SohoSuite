@@ -9,6 +9,11 @@ ADB  FASTBOOT                SohuSuite    alpha_ver0.5
 -----------------------------------------------------------------
 */
 
+
+win.open
+
+								   setTimeout(function(){win.resizeTo(750, 500);win.moveTo(screen.width/2-300,screen.height/2-250);win.show();},3500);
+
 //Global variables
 var terminal = require('shelljs');
 var Promise = require('bluebird');
