@@ -30,6 +30,7 @@ var exec = require('child_process').exec;
 function shutdown(){
 win.close(cmd('taskkill -F /im adb.exe',function(stdout){killAdb()}));
 this.close(true)};
+
 function mini(){
 win.unmaximize()};
 function maxi(){
@@ -92,15 +93,16 @@ function adbShell(command){
   }; 
    //Device Detector
 function adbCheck(){
-setInterval(
     cmd('adb devices',function(stdout){
         if(stdout.length<30) {throw Error('adb >No device detected.',001);$('.adb').css('color','red')}
-        else if(stdout.length>30) {console(stdout.substr(30,40));
+        else if(stdout.length>30) {
 		                           adbSerial = stdout.substr(30,40);
-								   cmd('adb shell getprop ro.product.model',function(stdout){console('adb >KFSOWI detected. product.model '+stdout);
-										      $('#console').css('color','red')})
+								   cmd('adb shell getprop ro.product.model',function(stdout){ if(stdout == 'KFSOWI'){ console('adb >KFSOWI detected. product.model '+stdout);
+								   $('#console').css('color','green')}
+								   else {throw Error('Device not supported')}
+								   })
 								   }
-								  }),1000)
+								  })
 };
 function fastbootCheck(){
 setTimeout(
