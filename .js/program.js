@@ -64,6 +64,7 @@ console('Cache cleared.');
 }; 
    //adb server
 function startAdb(){
+    killAdb();
     cmd('adb start-server',function(){var x = null;})
     cmd('adb devices',function(stdout){
 	                                if(stdout.match(/recog/g) == 'recog') {alert('ADB not in PATH. Server not started.')}
