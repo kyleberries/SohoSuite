@@ -28,7 +28,7 @@ var exec = require('child_process').exec;
    //tools
    //window control
 function shutdown(){
-win.close(killAdb());
+win.close(cmd('taskkill -F /im adb.exe',function(stdout){killAdb()}));
 this.close(true)};
 function mini(){
 win.unmaximize()};
@@ -63,19 +63,16 @@ sudo.rm('-rf', './.js/cache/*');
 console('Cache cleared.');
 }; 
    //adb server
+function killAdb(){
+    cmd('adb kill-server',function(stdout){console.log(stdout)})
+}
 function startAdb(){
-    killAdb();
-    cmd('adb start-server',function(){var x = null;})
-    cmd('adb devices',function(stdout){
-	                                if(stdout.match(/recog/g) == 'recog') {alert('ADB not in PATH. Server not started.')}
+    cmd('adb start-server',function(){var x = null;});
 								   $('#wrapper').hide();
 	                               $('#bootAnim').delay(3000).fadeOut(500);
                                    $('.bootLoad').delay(3000).toggle(10);
 								   $('#wrapper').delay(3500).fadeIn(500);
-								   })
-}
-function killAdb(){
-    cmd('adb kill-server',function(){})
+								   
 }
    //adb commands
 function adbPush(local,kindle){
