@@ -81,16 +81,15 @@ setTimeout(
 };
 
 function fastbootCheck(){
-setTimeout(
-    cmd('fastboot -i 0x1949 getvar product',function(stdout){
-	     if(stdout.match(/Soho/g) == 'Soho'){
-		   cmd('fastboot -i 0x1949 devices',function(stdout){fbSerial == stdout.substr(0,16)});
-		   $('#console').css('color','red');console('fastboot >KFSOWI detected.');
-		 }
-		 else if(stdout != null && stdout !== '' && stdout.match(/Soho/g) !== 'Soho')
-		         {throw Error('fastboot >Unsupported Device')}
+    cmd('fastboot -i 0x1949 devices',function(stdout){
+	     if(stdout !== null && stdout !== ''){
+		                fbSerial == stdout;
+                        cmd('fastboot -i 0x1949 getvar product',function(stdout){
+                               if(stdout.match(/Soho/g)	== 'Soho'){console('fastboot >KFSOWI detected')}
+                               else{fbSerial == null;throw Error('fastboot >Unsupported device.')}							   
+											  })}
 		 else{throw Error('fastboot >No device detected')}
-	}),1000)
+	})
 };
 
 function fbFlash(kernel){
