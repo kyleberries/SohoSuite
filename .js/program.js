@@ -73,13 +73,8 @@ function adbShell(command){
    
 function adbCheck(){
     cmd('adb devices',function(stdout){
-        if(stdout.length<30) {throw Error('adb >No device detected.',001);$('.adb').css('color','red')}
-        else if(stdout.length>30) {
-		            cmd('adb shell getprop ro.product.model',function(stdout){
-					      if(stdout == 'KFSOWI'){console('KFSOWI detected.')};
-					})      				
-								  }
-	else{console('Device unsupported!')}	
+        if(stdout == ' List of devices attached') {throw Error('adb >No device detected.',001)}
+		else{}
 	})
 };
 
