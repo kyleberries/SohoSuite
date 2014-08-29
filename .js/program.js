@@ -52,7 +52,6 @@ function startAdb(){
 }
 
 function adbPush(local,kindle){
-adbCheck();
 if(adbSerial == true)
 {cmd('adb push '+local+' '+kindle, function(stdout){console(stdout)})}
 else{throw Error('adb >No device detected.')}
