@@ -82,7 +82,7 @@ setTimeout(
 	     if(stdout !== null && stdout !== ''){
 		                fbSerial == stdout.substr(0,16);
                         cmd('fastboot -i 0x1949 getvar product',function(stdout){
-                               if(stdout = 'Soho-PVT-Prod-07'){console('fastboot >KFSOWI detected')}
+                               if(stdout.match(/Soho/g) == 'Soho'){console('fastboot >KFSOWI detected')}
                                else{fbSerial == null;throw Error('fastboot >Unsupported device.')}							   
 											  })}
 		 else{throw Error('fastboot >No device detected')}
