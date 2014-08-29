@@ -72,20 +72,25 @@ function adbShell(command){
   }; 
    
 function adbCheck(){
+setTimeout(
     cmd('adb shell getprop ro.product.model',function(stdout){
         if(stdout == '' || stdout == null) {throw Error('adb >No device detected.')}
 		else if(stdout.match(/KFSOWI/g) == 'KFSOWI'){console('adb >KFSOWI detected.')}
 		else {throw Error('adb >Unsupported device.')}
-	})
+	}),1000)
 };
 
 function fastbootCheck(){
 setTimeout(
-    cmd('fastboot -i 0x1949 devices',function(stdout){
-        if(stdout.length<15) {throw Error('fastboot >No device detected.',002);$('.fastboot').css('color','red')}
-        else if(stdout.length>15) {
-console(stdout);$('.fastboot').css('color','green')}
-}),1000)
+    cmd('fastboot -i 0x1949 getvar product',function(stdout){
+	     if(stdout.match(/Soho/g) == 'Soho'){
+		   cmd('fastboot -i 0x1949 devices',function(stdout){fbSerial == stdout.substr(0,16)});
+		   $('#console').css('color','red');console('fastboot >KFSOWI detected.');
+		 }
+		 else if(stdout != null && stdout !== '' && stdout.match(/Soho/g) !== 'Soho')
+		         {throw Error('fastboot >Unsupported Device')}
+		 else{throw Error('fastboot >No device detected')}
+	}),1000)
 };
 
 function fbFlash(kernel){
