@@ -81,8 +81,8 @@ setTimeout(
     cmd('fastboot -i 0x1949 devices',function(stdout){
 	     if(stdout !== null && stdout !== ''){
 		                fbSerial == stdout.substr(0,16);
-                        cmd('fastboot -i 0x1949 continue',function(stdout){
-                               console(stdout)						   
+                        cmd('fastboot -i 0x1949 getvar product',function(stdout){
+                               console(stdout.match(/Soho/g))						   
 											  })}
 		 else{throw Error('fastboot >No device detected')}
 	}),1000)
