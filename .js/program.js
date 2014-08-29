@@ -5,7 +5,7 @@ var win = nw.Window.get();
 var exec = require('child_process').exec;
 
 var fbSerial = null;
-
+var adbSerial = null;
 var homeParsed;
 var rootParsed;
 var restoreParsed;
@@ -53,7 +53,9 @@ function startAdb(){
 
 function adbPush(local,kindle){
 adbCheck();
-cmd('adb push '+local+' '+kindle, function(stdout){console(stdout)});
+if(adbSerial == true)
+{cmd('adb push '+local+' '+kindle, function(stdout){console(stdout)})}
+else{throw Error('adb >No device detected.')}
 };
 function adbPull(kindle,local){
    if(adbSerial !== null){cmd('adb pull -s '+adbSerial+' '+kindle+' '+local,function(stdout){console(stdout+' complete')})}
@@ -70,7 +72,7 @@ function adbCheck(){
 setTimeout(
     cmd('adb shell getprop ro.product.model',function(stdout){
         if(stdout == '' || stdout == null) {throw Error('adb >No device detected.')}
-		else if(stdout.match(/KFSOWI/g) == 'KFSOWI'){console('adb >KFSOWI detected.')}
+		else if(stdout.match(/KFSOWI/g) == 'KFSOWI'){console('adb >KFSOWI detected.');adbSerial == true;}
 		else {throw Error('adb >Unsupported device.')}
 	}),1000)
 };
