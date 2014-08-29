@@ -52,9 +52,9 @@ function startAdb(){
 }
 
 function adbPush(local,kindle){
-if(adbSerial == true)
+if(adbSerial == 'true')
 {cmd('adb push '+local+' '+kindle, function(stdout){console(stdout)})}
-else{throw Error('adbSerial undefined')}
+else{throw Error('Device not registered.')}
 };
 function adbPull(kindle,local){
    if(adbSerial !== null){cmd('adb pull -s '+adbSerial+' '+kindle+' '+local,function(stdout){console(stdout+' complete')})}
@@ -70,9 +70,9 @@ function adbShell(command){
 function adbCheck(){
 setTimeout(
     cmd('adb shell getprop ro.product.model',function(stdout){
-        if(stdout == '' || stdout == null) {adbSerial == false;throw Error('adb >No device detected.')}
-		else if(stdout.match(/KFSOWI/g) == 'KFSOWI'){adbSerial == true;console('adb >KFSOWI detected.')}
-		else {adbSerial == false;throw Error('adb >Unsupported device.')}
+        if(stdout == '' || stdout == null) {adbSerial == 'false';throw Error('adb >No device detected.')}
+		else if(stdout.match(/KFSOWI/g) == 'KFSOWI'){adbSerial == 'true';console('adb >KFSOWI detected.')}
+		else {adbSerial == 'false';throw Error('adb >Unsupported device.')}
 	}),1000)
 };
 
