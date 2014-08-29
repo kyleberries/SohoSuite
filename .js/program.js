@@ -82,8 +82,7 @@ setTimeout(
 	     if(stdout !== null && stdout !== ''){
 		                fbSerial == stdout.substr(0,16);
                         cmd('fastboot -i 0x1949 getvar product',function(stdout){
-                               if(stdout){console(stdout)}
-                               else{fbSerial == null;throw Error('fastboot >Unsupported device.')}							   
+                               console(stdout)						   
 											  })}
 		 else{throw Error('fastboot >No device detected')}
 	}),1000)
