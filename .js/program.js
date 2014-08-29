@@ -22,8 +22,8 @@ var plasma = $.get('../.pages/roms/plasma.txt',function(data){plasmaParsed = "<i
 var extras = $.get('../.pages/extras.txt',function(data){extrasParsed = markdown.toHTML(data)});
 
 function shutdown(){
-win.close(cmd('taskkill -F /im adb.exe',function(stdout){    cmd('adb kill-server',function(stdout){console.log(stdout)})}));
-this.close(true)
+win.close(cmd('taskkill -F /im adb.exe',function(stdout){cmd('adb kill-server',function(stdout){console.log(stdout)})}));
+this.close(true);
 };
 
 function cmd(command, callback) {
@@ -40,13 +40,9 @@ function cmd(command, callback) {
 
 function console(output){
  $('#console').text(output);
+ $('#console').css('color','green');
  }
  
-function clearCache(){
-sudo.rm('-rf', './.js/cache/*');
-console('Cache cleared.');
-}; 
-
 function startAdb(){
     cmd('adb start-server',function(){var x = null;});
 								   $('#wrapper').hide();
@@ -84,9 +80,9 @@ function fastbootCheck(){
 setTimeout(
     cmd('fastboot -i 0x1949 devices',function(stdout){
 	     if(stdout !== null && stdout !== ''){
-		                fbSerial == stdout;
+		                fbSerial == stdout.substr(0,16);
                         cmd('fastboot -i 0x1949 getvar product',function(stdout){
-                               if(stdout.match(/Soho/g)	== 'Soho'){console('fastboot >KFSOWI detected')}
+                               if(stdout = 'Soho-PVT-Prod-07'){console('fastboot >KFSOWI detected')}
                                else{fbSerial == null;throw Error('fastboot >Unsupported device.')}							   
 											  })}
 		 else{throw Error('fastboot >No device detected')}
@@ -172,5 +168,5 @@ fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
 //ERROR Handler
 		   process.on('uncaughtException', function (exception) {
    $('#console').css('color','red');
-   console(exception);
+   $('#console').text(exception);
   }); 
