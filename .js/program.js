@@ -1,8 +1,11 @@
-//VARIABLES
-   //module 
 var markdown = require( "markdown" ).markdown;
 var fs = require('fs');
-   //pages
+var nw = require('nw.gui');
+var win = nw.Window.get();
+var exec = require('child_process').exec;
+
+var fbSerial = null;
+
 var homeParsed;
 var rootParsed;
 var restoreParsed;
@@ -17,65 +20,41 @@ var ice = $.get('../.pages/roms/ice.txt',function(data){iceParsed = "<input type
 var hellfire = $.get('../.pages/roms/hellfire.txt',function(data){hellfireParsed = "<input type='button' onclick='hellfireInstall()' id='hellfireBtn' class='tool oneBtn' value='Install Hellfire'></input><br />"+markdown.toHTML(data)});
 var plasma = $.get('../.pages/roms/plasma.txt',function(data){plasmaParsed = "<input type='button' onclick='plasmaInstall()' id='plasmaBtn' class='tool oneBtn' value='Install Plasma'></input><br />"+markdown.toHTML(data)});
 var extras = $.get('../.pages/extras.txt',function(data){extrasParsed = markdown.toHTML(data)});
-   //window control
-var nw = require('nw.gui');
-var win = nw.Window.get();
-win.isMaximized = false;
-   //device control
-var fbSerial = null;
-var exec = require('child_process').exec;
-//FUNCTIONS
-   //tools
-   //window control
-function shutdown(){
-win.close(cmd('taskkill -F /im adb.exe',function(stdout){killAdb()}));
-this.close(true)};
 
-function mini(){
-win.unmaximize()};
-function maxi(){
-            if (win.isMaximized)
-               { win.unmaximize();
-				$("#fullScreen").attr("src","../.icon/maximize.png");}
-            else
-              {  win.maximize();
-				$("#fullScreen").attr("src","../.icon/minimize.png");}
-        };
-   //backend cleanup
+function shutdown(){
+win.close(cmd('taskkill -F /im adb.exe',function(stdout){    cmd('adb kill-server',function(stdout){console.log(stdout)})}));
+this.close(true)
+};
+
 function cmd(command, callback) {
     var proc = exec(command);
-
     var list = [];
     proc.stdout.setEncoding('utf8');
-
     proc.stdout.on('data', function (chunk) {
         list.push(chunk);
     });
-
     proc.stdout.on('end', function () {
         callback(list.join());
     });
 }
+
 function console(output){
  $('#console').text(output);
  }
+ 
 function clearCache(){
 sudo.rm('-rf', './.js/cache/*');
 console('Cache cleared.');
 }; 
-   //adb server
-function killAdb(){
-    cmd('adb kill-server',function(stdout){console.log(stdout)})
-}
+
 function startAdb(){
     cmd('adb start-server',function(){var x = null;});
 								   $('#wrapper').hide();
 	                               $('#bootAnim').delay(3000).fadeOut(500);
                                    $('.bootLoad').delay(3000).toggle(10);
 								   $('#wrapper').delay(3500).fadeIn(500);
-								   
 }
-   //adb commands
+
 function adbPush(local,kindle){
    if(adbSerial !== null){cmd('adb push -s '+adbSerial+' '+local+' '+kindle,function(stdout){console(stdout+' complete')})}
    else if(adbSerial == null) throw new Error('No device detected [adbPush]')
@@ -91,31 +70,32 @@ function adbShell(command){
    else if(adbSerial==null)throw new Error('No device detected [adbShell]')
    else {throw new Error('command fail, or detection fail')}
   }; 
-   //Device Detector
+   
 function adbCheck(){
     cmd('adb devices',function(stdout){
         if(stdout.length<30) {throw Error('adb >No device detected.',001);$('.adb').css('color','red')}
         else if(stdout.length>30) {
-		                           adbSerial = stdout.substr(30,40);
-								   cmd('adb shell getprop ro.product.model',function(stdout){ if(stdout == 'KFSOWI'){ console('adb >KFSOWI detected. product.model '+stdout);
-								   $('#console').css('color','green')}
-								   else {throw Error('Device not supported')}
-								   })
-								   }
-								  })
+		            cmd('adb shell getprop ro.product.model',function(stdout){
+					      if(stdout == 'KFSOWI'){console('KFSOWI detected.')};
+					})      				
+								  }
+	else{console('Device unsupported!')}	
+	})
 };
+
 function fastbootCheck(){
 setTimeout(
     cmd('fastboot -i 0x1949 devices',function(stdout){
         if(stdout.length<15) {throw Error('fastboot >No device detected.',002);$('.fastboot').css('color','red')}
-        else if(stdout.length>15) {console(stdout);$('.fastboot').css('color','green')}
+        else if(stdout.length>15) {
+console(stdout);$('.fastboot').css('color','green')}
 }),1000)
 };
-   //kernel swap
+
 function fbFlash(kernel){
  //cmd('fastboot -s '+fbSerial+' boot '+kernel, function(stdout){}
 };
-//JQUERY
+
 function page(file,tool,btnvalue){
 fs.readFile(file, 'utf8', function (err,data) {
   if (err) {
@@ -125,6 +105,7 @@ fs.readFile(file, 'utf8', function (err,data) {
   $('#buttonWrap').html("<input type='button' class='tool oneBtn' onclick='"+tool+"()' value='"+btnvalue+"' />")
 });
 };
+
 $(document).ready(function(){
   $('.romLink').click(function(){
   page('./.html/submitROM.txt','submitROM','Submit a ROM');
@@ -177,13 +158,7 @@ fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
   });
 		  
 });
-//BEFORELOAD
-	        win.on('maximize', function(){
-            win.isMaximized = true;
-        });
-            win.on('unmaximize', function(){
-            win.isMaximized = false;
-        });  
+
  fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
    var devCheck = "<input type='button' value='ADB Devices' onclick='adbCheck()' class='tool' /><input type='button' value='FASTBOOT Devices' onclick='fastbootCheck()' class='tool' />";
   if (err) {
@@ -193,6 +168,7 @@ fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
   $('#buttonWrap').html(devCheck);
     });	
 	
+//ERROR Handler
 		   process.on('uncaughtException', function (exception) {
    $('#console').css('color','red');
    console(exception);
