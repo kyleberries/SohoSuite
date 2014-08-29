@@ -81,6 +81,7 @@ setTimeout(
 };
 
 function fastbootCheck(){
+setTimeout(
     cmd('fastboot -i 0x1949 devices',function(stdout){
 	     if(stdout !== null && stdout !== ''){
 		                fbSerial == stdout;
@@ -89,7 +90,7 @@ function fastbootCheck(){
                                else{fbSerial == null;throw Error('fastboot >Unsupported device.')}							   
 											  })}
 		 else{throw Error('fastboot >No device detected')}
-	})
+	}),1000)
 };
 
 function fbFlash(kernel){
