@@ -79,13 +79,13 @@ setTimeout(
 function fastbootCheck(){
 setTimeout(
     cmd('fastboot -i 0x1949 devices',function(stdout){
-	     if(stdout !== null && stdout !== ''){
-		                fbSerial == stdout.substr(0,16);
-                        cmd('fastboot -i 0x1949 getvar product',function(stdout){
-                               console(stdout.match(/Soho/g))						   
-											  })}
-		 else{throw Error('fastboot >No device detected')}
-	}),1000)
+	     if(stdout !== null && stdout !== ''){fbSerial == stdout.substr(0,16)}
+		 else{throw Error('fastboot >No device detected')}}
+		 ),1000)
+if(fbSerial != ''&&fbSerial != null){
+    cmd('fastboot -i 0x1949 getvar product',function(stdout){console(stdout)})
+}
+else {throw Error('fastboot >Unsupported device')}
 };
 
 function fbFlash(kernel){
