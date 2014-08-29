@@ -71,9 +71,9 @@ function adbShell(command){
 function adbCheck(){
 setTimeout(
     cmd('adb shell getprop ro.product.model',function(stdout){
-        if(stdout == '' || stdout == null) {throw Error('adb >No device detected.');adbSerial == false;}
-		else if(stdout.match(/KFSOWI/g) == 'KFSOWI'){console('adb >KFSOWI detected.');adbSerial == true;}
-		else {throw Error('adb >Unsupported device.');adbSerial == false;}
+        if(stdout == '' || stdout == null) {adbSerial == false;throw Error('adb >No device detected.')}
+		else if(stdout.match(/KFSOWI/g) == 'KFSOWI'){adbSerial == true;console('adb >KFSOWI detected.')}
+		else {adbSerial == false;throw Error('adb >Unsupported device.')}
 	}),1000)
 };
 
@@ -81,11 +81,11 @@ function fastbootCheck(){
 setTimeout(
     cmd('fastboot -i 0x1949 devices',function(stdout){
 	     if(stdout !== null && stdout !== ''){
-		                fbSerial == stdout.substr(0,16);
                         cmd('fastboot -i 0x1949 getvar product',function(stdout){
-                               console(stdout.match(/Soho/g))						   
+                               if(stdout.match(/Soho/g)=='Soho'){console('fastboot >KFSOWI Detected.');fbSerial==true;}	
+                               else{fbSerial==false;throw Error('fastboot >Unsupported Device.')}							   
 											  })}
-		 else{throw Error('fastboot >No device detected')}
+		 else{fbSerial==false;throw Error('fastboot >No device detected')}
 	}),1000)
 };
 
