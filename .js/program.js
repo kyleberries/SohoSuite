@@ -52,9 +52,8 @@ function startAdb(){
 }
 
 function adbPush(local,kindle){
-   if(adbSerial !== null){cmd('adb push -s '+adbSerial+' '+local+' '+kindle,function(stdout){console(stdout+' complete')})}
-   else if(adbSerial == null) throw new Error('No device detected [adbPush]')
-   else {throw new Error('xfer fail.')}
+adbCheck();
+cmd('adb push '+local+' '+kindle, function(stdout){console(stdout)});
 };
 function adbPull(kindle,local){
    if(adbSerial !== null){cmd('adb pull -s '+adbSerial+' '+kindle+' '+local,function(stdout){console(stdout+' complete')})}
@@ -79,13 +78,13 @@ setTimeout(
 function fastbootCheck(){
 setTimeout(
     cmd('fastboot -i 0x1949 devices',function(stdout){
-	     if(stdout !== null && stdout !== ''){fbSerial == stdout.substr(0,16)}
-		 else{throw Error('fastboot >No device detected')}}
-		 ),1000)
-if(fbSerial != ''&&fbSerial != null){
-    cmd('fastboot -i 0x1949 getvar product',function(stdout){console(stdout)})
-}
-else {throw Error('fastboot >Unsupported device')}
+	     if(stdout !== null && stdout !== ''){
+		                fbSerial == stdout.substr(0,16);
+                        cmd('fastboot -i 0x1949 getvar product',function(stdout){
+                               console(stdout.match(/Soho/g))						   
+											  })}
+		 else{throw Error('fastboot >No device detected')}
+	}),1000)
 };
 
 function fbFlash(kernel){
