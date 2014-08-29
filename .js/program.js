@@ -54,7 +54,7 @@ function startAdb(){
 function adbPush(local,kindle){
 if(adbSerial == true)
 {cmd('adb push '+local+' '+kindle, function(stdout){console(stdout)})}
-else{throw Error(stdout)}
+else{throw Error('adbSerial undefined')}
 };
 function adbPull(kindle,local){
    if(adbSerial !== null){cmd('adb pull -s '+adbSerial+' '+kindle+' '+local,function(stdout){console(stdout+' complete')})}
