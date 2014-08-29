@@ -4,8 +4,8 @@ var nw = require('nw.gui');
 var win = nw.Window.get();
 var exec = require('child_process').exec;
 
-var fbSerial = null;
-var adbSerial = null;
+var fbSerial;
+var adbSerial;
 var homeParsed;
 var rootParsed;
 var restoreParsed;
