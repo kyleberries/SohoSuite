@@ -71,9 +71,9 @@ function adbShell(command){
 function adbCheck(){
 setTimeout(
     cmd('adb shell getprop ro.product.model',function(stdout){
-        if(stdout == '' || stdout == null) {throw Error('adb >No device detected.')}
+        if(stdout == '' || stdout == null) {throw Error('adb >No device detected.');adbSerial == false;}
 		else if(stdout.match(/KFSOWI/g) == 'KFSOWI'){console('adb >KFSOWI detected.');adbSerial == true;}
-		else {throw Error('adb >Unsupported device.')}
+		else {throw Error('adb >Unsupported device.');adbSerial == false;}
 	}),1000)
 };
 
