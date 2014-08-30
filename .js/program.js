@@ -1,3 +1,4 @@
+
 var markdown = require( "markdown" ).markdown;
 var fs = require('fs');
 var nw = require('nw.gui');
@@ -52,9 +53,11 @@ function startAdb(){
 }
 
 function adbPush(local,kindle){
-if(adbSerial == 'true')
-{cmd('adb push '+local+' '+kindle, function(stdout){console(stdout)})}
-else{throw Error('Device not registered.')}
+setTimeout(
+    cmd('adb shell su -c reboot',function(stdout,error){
+        if(error) {throw Error(error)}
+		else {adbSerial == 'false';throw Error('adb >Unsupported device.')}
+	}),1000)
 };
 function adbPull(kindle,local){
    if(adbSerial !== null){cmd('adb pull -s '+adbSerial+' '+kindle+' '+local,function(stdout){console(stdout+' complete')})}
@@ -156,7 +159,7 @@ fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
 });
 
  fs.readFile('./.html/home.txt', 'utf8', function (err,data) {
-   var devCheck = "<input type='button' value='ADB Devices' onclick='adbCheck()' class='tool' /><input type='button' value='FASTBOOT Devices' onclick='fastbootCheck()' class='tool' />";
+   var devCheck = "<input type='button' value='FASTBOOT Devices' onclick='fastbootCheck()' class='tool' />";
   if (err) {
     throw Error('SoSu >Cannot load page. '+err,004);
   }
