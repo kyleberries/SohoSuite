@@ -55,4 +55,39 @@ client.listDevices()
   .catch(function(err) {
     throw Error('Something went wrong:', err.stack)
   })
+  client.kill();
+};
+function adbPull(name,remote,local){
+client.listDevices()
+  .then(function(devices) {
+    return Promise.map(devices, function(device) {
+      return client.pull(device.id, remote)
+        .then(function(transfer) {
+          return new Promise(function(resolve, reject) {
+            var fn = './.js/cache/' + device.id + name
+            transfer.on('progress', function(stats) {
+              console('[%s] Pulled %d bytes so far',
+                device.id,
+                stats.bytesTransferred)
+            })
+            transfer.on('end', function() {
+              console('[%s] Pull complete', device.id)
+              resolve(device.id)
+            })
+            transfer.on('error', reject)
+            transfer.pipe(fs.createWriteStream(fn))
+          })
+        })
+    })
+  })
+  .then(function() {
+    console('Done pulling '+remote+' from Kindle')
+  })
+  .catch(function(err) {
+    throw Error('Something went wrong:', err.stack)
+  })
+  client.kill();
+};
+function adbShell(command){
+
 };
