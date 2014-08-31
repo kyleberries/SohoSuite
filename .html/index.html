@@ -3,57 +3,16 @@
   <head>
     <meta charset="utf-8">
 	<title>SohoSuite</title>
-	<!--Styles-->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="../.css/main.css">
-	<link href='http://fonts.googleapis.com/css?family=Days+One' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:100,400,700' rel='stylesheet' type='text/css'>
-     <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400,700italic|Yanone+Kaffeesatz:400,200|Cinzel:400,700|Open+Sans+Condensed:300,300italic' rel='stylesheet' type='text/css'>
-	<!--end styles-->
 	<!--Scripts-->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="../.js/program.js"></script>
-	<script type="text/javascript" src="../.js/prog2.js"></script>
-	<script type="text/javascript" src="../.js/jquery.slimscroll.min.js"></script>
 	<!--end scripts-->
   </head>
   
-  <body onload="adbCheck"> <!--startAdb()-->
-  <!--span class='bootLoad'>Starting ADB shell...</span>
-  <img class='bootAnim' id='bootAnim' src='../.icon/bootAnim.gif'></img>
-  <!--img class='banner' src="../.icon/banner.png"></img-->
-     <div id="wrapper" class="wrapper">
-	    <div id='window' class='window'>
-		   <img class='toolbar' src='../.icon/power.png' id='winClose' onclick='shutdown()' alt='close' ></img>
-		   <img class='toolbar max' src='../.icon/maximize.png' id='fullScreen'  onclick='maxi()' alt='close' ></img>
-		</div>
-	     <div id="headerWrap" class="headerWrap">
-		     <span class="header" id="header">(<b>So</b>)ho(<b>Su</b>)ite<span class="header version" style="font-size:15px">alpha_v0.5 &copy</span></span>
-		 </div>
-		 <div id="menuWrap" class="menuWrap">
-		     <ul id="menu" class="menu">
-			     <li><a href="#" id="rootLink">Root</a></li><br />
-				 <li><a href="#" id="restoreLink">Restore</a></li><br />
-				 <li  
-				 onmouseover="$(this).css('color','#3498db').css('text-shadow','1px 1px black')" 
-				 onmouseout="$(this).css('color','white').css('text-shadow','1px 1px black')" class="romLink">ROMs</li>
-					     <li class="toggle"><a href="#" id="iceLink">Ice</a></li>
-						 <li class="toggle"><a href="#" id="hellfireLink">HellFire</a></li>
-						 <li class="toggle"><a href="#" id="plasmaLink">Plasma</a></li>
-				 <br /></li>
-				 <li><a href="#" id="extrasLink">Extras</a></li><br />
-				 <li><a href="#" onclick='window.location.reload()'>Reboot SoSu</a></li>
-			 </ul>
-			 </ul>
-		 </div>
-		 <div id="contentWrap" class="contentWrap">
-		 		 <div id="console" class="console">.
-		 </div>
-		 <div id='buttonWrap' class='buttonWrap'>
-		 </div>
-		 <div id="content" class="content scroll">       
-		 </div>
-		 </div>
-	 </div>
+  <body>
+  <div id='console' class='console'>Console...</div>
+  <input type='button' value='Check for KFSOWI (adb)' onclick='adbCheck()' /><br />
+  <input type='button' value='Check for KFSOWI (fastboot)' onclick='fastbootCheck()' /><br />
+  <input type='button' value='reboot (adb)' class='tool' onclick='adbShell()' /><br />
   </body> 
 </html>

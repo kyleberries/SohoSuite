@@ -7,7 +7,7 @@
   "window": {
     "title": "Created by: Kyle Berry",
     "toolbar": false,
-    "frame": false,
+    "frame": true,
     "width": 750,
     "height": 550,
 	"min-height":395,

@@ -88,6 +88,17 @@ client.listDevices()
   })
   client.kill();
 };
-function adbShell(command){
 
+function adbShell(command){
+client.shell(device,command,function(output) console(output))
+}
+
+function adbReboot(){
+adbShell('su -c reboot');
 };
+
+//ERROR Handler
+		   process.on('uncaughtException', function (exception) {
+   $('#console').css('color','red');
+   console(exception);
+  }); 
