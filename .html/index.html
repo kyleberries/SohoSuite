@@ -9,11 +9,10 @@
 	<!--end scripts-->
   </head>
   
-  <body>
+  <body onload='track()'>
+  <div id='tracker'>No device detected in ADB mode</div>
   <div id='console' class='console'>Console...</div>
-  <input type='button' value='Check for KFSOWI (adb)' onclick='adbCheck()' /><br />
-  <input type='button' value='Check for KFSOWI (fastboot)' onclick='fastbootCheck()' /><br />
-  <input type='button' value='reboot (adb)' class='tool' onclick="adbShell('su -c reboot')" /><br />
-    <input type='button' value='push test (adb)' class='tool' onclick="adbPush('./.js/cache/test.txt','/sdcard/test2.txt')" /><br />
+    <input type='button' value='Root' class='tool' onclick="root()" /><br />
+    <input type='button' value='Restore' class='tool' onclick="restore()" /><br />
  </body> 
 </html>

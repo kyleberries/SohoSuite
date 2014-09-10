@@ -3,29 +3,31 @@ var fs = require('fs')
 var Promise = require('bluebird');
 var client = adb.createClient();
 var markdown = require( "markdown" ).markdown;
-var exec = require('child_process').exec;
 var shell = require('shelljs');
 var fbSerial = 'false';
 var dev = null;
 
+$(document).ready(function(){
+  $('body').css('opacity','0')
+  $('body').fadeTo(500,1);
+});
+
 function console(output){
 $('#console').text(output);
 }
-
 function fastbootCheck(){
-   console('Please wait...');
    shell.exec('fastboot -i 0x1949 devices',function(code,output){
        if(output != ''){
 	       shell.exec('fastboot -i 0x1949 getvar product',function(code,output){
-		      if(output.match(/Soho/g) != 'Soho'){throw Error('Bad device')}
-			  console('KFSOWI detected')
+		      if(output.match(/Soho/g) != 'Soho'){fbSerial = 'false';throw Error('Unsupported device')}
+			  fbSerial = 'true';
 		   })
 	   }
-	   else{throw Error('No Device detected')}
+	   else{
+	      fbSerial = 'false';}
    })
 }
-function adbCheck(){
-console('Please wait...');
+/*function adbCheck(){
 client.listDevices()
   .then(function(devices) {
    if(devices !='' &&devices != null){
@@ -34,34 +36,20 @@ client.listDevices()
         .then(function(properties) {
 		 	 dev = device.id;
           var model = properties['ro.product.model'];
-		  if(model=='KFSOWI' || model=='sdk'){console('adb >KFSOWI detected.')
-		                                      $('#console').css('color','green')}
-		  else {dev=null;throw Error('adb >Unsupported device.')}
+		  if(model!='KFSOWI'){dev = null}
         })
     })
   }
-  else {dev=null;throw Error('adb >No device detected')}
+  else {dev=null}
   })
-  .catch(function(err) {
-    console(err)
-  })
-}
-
-function cmd(command, callback) {
-    var proc = exec(command);
-    var list = [];
-    proc.stdout.setEncoding('utf8');
-    proc.stdout.on('data', function (chunk) {
-        list.push(chunk);
-    });
-    proc.stdout.on('end', function () {
-        callback(list.join());
-    });
-}
+}*/
 function adbShell(command){
 if(dev==null){throw Error('adb >No KFSOWI detected')};
-client.shell(dev,command)
- .then(console('adb >'+command+' complete'))
+   client.shell(dev,command,function(err,output){
+      output.on('data',function(chunk){
+	    console('ADB> '+chunk)
+	  })
+   })
 };
 function adbPush(local,remote){
 if(dev == null){throw Error('No KFSOWI detected')}
@@ -92,21 +80,32 @@ client.listDevices()
     connsole(err.stack)
   })
 };
+function track(){
+client.trackDevices()
+  .then(function(tracker) {
+    tracker.on('add', function(device) {
+      $('#tracker').text('Device Detected in ADB mode', device.id);
+	  dev = device.id;
+    })
+    tracker.on('remove', function(device) {
+      $('#tracker').text('Device unplugged', device.id)
+	  dev = null;
+    })
+    tracker.on('end', function() {
+      $('#tracker').text('Tracking stopped')
+	  dev = null;
+    })
+  })
+  .catch(function(err) {
+      $('#tracker').text('Something went wrong:', err.stack)
+	  dev = null;
+  })
+};
 
 function root(){
-//check kernelver
-//reboot fastboot
-//flash 11310
-//continue boot adb
-//push root files
-//chmod root files
-//run root scripts
-//reboot fastboot
-//flash kernelver
-//continue final boot
-//cleanup
 };
 function restore(){
+adbShell('grep incremental /system/build.prop')
 //wget restore.bin
 //wget minisys
 //reboot fastboot
@@ -132,6 +131,6 @@ function gappsInstall(){
   
   //ERROR Handler
 		   process.on('uncaughtException', function (exception) {
-   $('#console').css('color','red');
-   $('#console').text(exception);
+$('#console').css('color','red');
+console(exception)
   }); 
