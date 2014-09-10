@@ -2,40 +2,33 @@ var adb = require('adbkit');
 var fs = require('fs')
 var Promise = require('bluebird');
 var client = adb.createClient();
-var fbSerial = 'false';
-var dev = null;
 var markdown = require( "markdown" ).markdown;
 var exec = require('child_process').exec;
+var fbSerial = 'false';
+var dev = null;
+
 function console(output){
 $('#console').text(output);
 }
-function cmd(command, callback) {
-    var proc = exec(command);
-    var list = [];
-    proc.stdout.setEncoding('utf8');
-    proc.stdout.on('data', function (chunk) {
-        list.push(chunk);
-    });
-    proc.stdout.on('end', function () {
-        callback(list.join());
-    });
-}
+
 function fastbootCheck(){
+console('Please wait...');
 cmd('fastboot -i 0x1949 devices',function(stdout){
     if(stdout != '' && stdout != null){
 	    fbSerial == 'true';
 	    cmd('fastboot -i 0x1949 getvar product',function(stdout){
-		    if(stdout.match(/Soho/g) != 'Soho'){
-			  fbSerial == 'false';
-			  throw Error('Not a Soho');
+		    console(stdout)
+		    //if(stdout.match(/Soho/g) != 'Soho'){
+			  //fbSerial == 'false';
+			  //throw Error('Not a Soho');
 			}
 		})
 	}
 	else{throw Error('No Fastboot Device')}
 })
 };
-//complete
 function adbCheck(){
+console('Please wait...');
 client.listDevices()
   .then(function(devices) {
    if(devices !='' &&devices != null){
@@ -55,6 +48,18 @@ client.listDevices()
   .catch(function(err) {
     console(err)
   })
+}
+
+function cmd(command, callback) {
+    var proc = exec(command);
+    var list = [];
+    proc.stdout.setEncoding('utf8');
+    proc.stdout.on('data', function (chunk) {
+        list.push(chunk);
+    });
+    proc.stdout.on('end', function () {
+        callback(list.join());
+    });
 }
 function adbShell(command){
 if(dev==null){throw Error('adb >No KFSOWI detected')};
@@ -106,8 +111,11 @@ function root(){
 };
 function restore(){
 //wget restore.bin
+//wget minisys
 //reboot fastboot
 //flash 11310
+//flash 11310 recovery
+//flash minisys
 //continue adb
 //remount system rw
 //push restore.bin /cache/update.zip
@@ -115,14 +123,16 @@ function restore(){
 //echo --update_package=/cache/update.zip > /cache/recovery/command
 //plug into regular cable
 //reboot recovery
+//cleanup
 };
-function romInstall(){
+function romInstall(rom){
 
 };
-
 function gappsInstall(){
 
 };
+  
+  
   //ERROR Handler
 		   process.on('uncaughtException', function (exception) {
    $('#console').css('color','red');
