@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 var client = adb.createClient();
 var markdown = require( "markdown" ).markdown;
 var exec = require('child_process').exec;
+var shell = require('shelljs');
 var fbSerial = 'false';
 var dev = null;
 
@@ -11,12 +12,7 @@ function console(output){
 $('#console').text(output);
 }
 
-function fastbootCheck(){
-console('Please wait...');
-cmd('fastboot -i 0x1949 getvar product',function(stdout){
-console(stdout)
-})
-};
+function fastbootCheck(){console('Please wait...');shell.exec('fastboot -i 0x1949 getvar product',function(output){console(output)})}
 function adbCheck(){
 console('Please wait...');
 client.listDevices()
