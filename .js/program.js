@@ -14,17 +14,7 @@ $('#console').text(output);
 function fastbootCheck(){
 console('Please wait...');
 cmd('fastboot -i 0x1949 devices',function(stdout){
-    if(stdout != '' && stdout != null){
-	    fbSerial == 'true';
-	    cmd('fastboot -i 0x1949 getvar product',function(stdout){
-		    //if(stdout.match(/Soho/g) != 'Soho'){
-			  //fbSerial == 'false';
-			  //throw Error('Not a Soho');
-			//}
-			console(stdout)
-		})
-	}
-	else{throw Error('No Fastboot Device')}
+console(stdout)
 })
 };
 function adbCheck(){
