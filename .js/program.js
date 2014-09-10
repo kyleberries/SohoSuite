@@ -12,7 +12,12 @@ function console(output){
 $('#console').text(output);
 }
 
-function fastbootCheck(){console('Please wait...');shell.exec('fastboot -i 0x1949 getvar product',function(output){console(output)})}
+function fastbootCheck(){
+   console('Please wait...');
+   shell.exec('fastboot -i 0x1949 getvar product',function(code,output){
+       console(output)
+   })
+}
 function adbCheck(){
 console('Please wait...');
 client.listDevices()
