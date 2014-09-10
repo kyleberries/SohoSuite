@@ -21,15 +21,17 @@ function cmd(command, callback) {
     });
 }
 function fastbootCheck(){
-setTimeout(
-    cmd('fastboot -i 0x1949 devices',function(stdout){
-	     if(stdout !== null && stdout !== ''){
-                        cmd('fastboot -i 0x1949 getvar product',function(stdout){
-                               if(stdout.match(/Soho/g)=='Soho'){console('fastboot >KFSOWI Detected.');fbSerial==true;}	
-                               else{fbSerial==false;throw Error('fastboot >Unsupported Device.')}							   
-											  })}
-		 else{fbSerial==false;throw Error('fastboot >No device detected')}
-	}),1000)
+cmd('fastboot -i 0x1949 devices',function(stdout){
+    if(stdout != '' && stdout != null){
+	    fbserial == 'true';
+	    cmd('fastboot -i 0x1949 getvar product',function(stdout){
+		    if(stdout.match(/Soho/g) != 'Soho'){
+			  throw Error('Not a Soho');
+			}
+		})
+	}
+	else{throw Error('No Fastboot Device')}
+})
 };
 //complete
 function adbCheck(){
@@ -87,7 +89,7 @@ client.listDevices()
     connsole(err.stack)
   })
 };
-  
+
   //ERROR Handler
 		   process.on('uncaughtException', function (exception) {
    $('#console').css('color','red');
