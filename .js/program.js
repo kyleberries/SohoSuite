@@ -14,8 +14,14 @@ $('#console').text(output);
 
 function fastbootCheck(){
    console('Please wait...');
-   shell.exec('fastboot -i 0x1949 getvar product',function(code,output){
-       console(output)
+   shell.exec('fastboot -i 0x1949 devices',function(code,output){
+       if(output != ''){
+	       shell.exec('fastboot -i 0x1949 getvar product',function(code,output){
+		      if(output.match(/Soho/g) != 'Soho'){throw Error('Bad device')}
+			  console('KFSOWI detected')
+		   })
+	   }
+	   else{throw Error('No Device detected')}
    })
 }
 function adbCheck(){
