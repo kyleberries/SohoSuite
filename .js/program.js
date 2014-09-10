@@ -13,7 +13,7 @@ $('#console').text(output);
 
 function fastbootCheck(){
 console('Please wait...');
-cmd('fastboot -i 0x1949 devices',function(stdout){
+cmd('fastboot -i 0x1949 getvar product',function(stdout){
 console(stdout)
 })
 };
