@@ -2,7 +2,7 @@ var adb = require('adbkit');
 var fs = require('fs')
 var Promise = require('bluebird');
 var client = adb.createClient();
-var fbSerial;
+var fbSerial = 'false';
 var dev = null;
 var markdown = require( "markdown" ).markdown;
 var exec = require('child_process').exec;
@@ -23,9 +23,10 @@ function cmd(command, callback) {
 function fastbootCheck(){
 cmd('fastboot -i 0x1949 devices',function(stdout){
     if(stdout != '' && stdout != null){
-	    fbserial == 'true';
+	    fbSerial == 'true';
 	    cmd('fastboot -i 0x1949 getvar product',function(stdout){
 		    if(stdout.match(/Soho/g) != 'Soho'){
+			  fbSerial == 'false';
 			  throw Error('Not a Soho');
 			}
 		})
@@ -90,6 +91,38 @@ client.listDevices()
   })
 };
 
+function root(){
+//check kernelver
+//reboot fastboot
+//flash 11310
+//continue boot adb
+//push root files
+//chmod root files
+//run root scripts
+//reboot fastboot
+//flash kernelver
+//continue final boot
+//cleanup
+};
+function restore(){
+//wget restore.bin
+//reboot fastboot
+//flash 11310
+//continue adb
+//remount system rw
+//push restore.bin /cache/update.zip
+//mkdir /cache/recovery
+//echo --update_package=/cache/update.zip > /cache/recovery/command
+//plug into regular cable
+//reboot recovery
+};
+function romInstall(){
+
+};
+
+function gappsInstall(){
+
+};
   //ERROR Handler
 		   process.on('uncaughtException', function (exception) {
    $('#console').css('color','red');
