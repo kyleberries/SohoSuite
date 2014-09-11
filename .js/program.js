@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 var client = adb.createClient();
 var markdown = require( "markdown" ).markdown;
 var shell = require('shelljs');
-var fbSerial = 'false';
+var fbSerial = null;
 var dev = null;
 
 $(document).ready(function(){
@@ -18,13 +18,12 @@ $('#console').text(output);
 function fastbootCheck(){
    shell.exec('fastboot -i 0x1949 devices',function(code,output){
        if(output != ''){
+	       fbSerial = output.substr(0,16);
 	       shell.exec('fastboot -i 0x1949 getvar product',function(code,output){
-		      if(output.match(/Soho/g) != 'Soho'){fbSerial = 'false';throw Error('Unsupported device')}
-			  fbSerial = 'true';
+		      if(output.match(/Soho/g) != 'Soho'){fbSerial = null;}
 		   })
 	   }
-	   else{
-	      fbSerial = 'false';}
+
    })
 }
 /*function adbCheck(){
@@ -103,32 +102,19 @@ client.trackDevices()
 };
 
 function root(){
+alert('Please power Kindle on as usual, but plug into fastboot cable');
+if(dev==null)throw Error('No device detected');
+client.reboot(dev);
+console('Please wait...');
+setTimeout(fastbootCheck(),5000);
+setTimeout(function(){
+ if(fbSerial!=null){
+    shell.exec('fastboot -i 0x1949 continue')
+	}
+ else{console('No device detected')}
+},7000)
 };
-function restore(){
-adbShell('grep incremental /system/build.prop')
-//wget restore.bin
-//wget minisys
-//reboot fastboot
-//flash 11310
-//flash 11310 recovery
-//flash minisys
-//continue adb
-//remount system rw
-//push restore.bin /cache/update.zip
-//mkdir /cache/recovery
-//echo --update_package=/cache/update.zip > /cache/recovery/command
-//plug into regular cable
-//reboot recovery
-//cleanup
-};
-function romInstall(rom){
 
-};
-function gappsInstall(){
-
-};
-  
-  
   //ERROR Handler
 		   process.on('uncaughtException', function (exception) {
 $('#console').css('color','red');
