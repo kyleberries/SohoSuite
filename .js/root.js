@@ -8,7 +8,7 @@ console('Verify Kindle is in fastboot mode, and the fastboot indicator above is 
 };
 function root2(){
 setTimeout(function(){
-if(fbSerial==null||fbSerial==''){ $('#root').attr("onclick","root1()");
+if(fbSerial==null){ $('#root').attr("onclick","root1()");
                                   $('#root').attr("value","Root");
 								  throw Error('fbSerial >No device detected');}
 fastboot('continue');

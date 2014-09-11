@@ -102,7 +102,6 @@ if(fbSerial==null&&adbSerial==null){$('#indicator').text('No Kindle connected')
 
   //ERROR Handler
 		   process.on('uncaughtException', function (exception) {
-$('#console').css('color','red');
 console(exception)
   }); 
   
