@@ -1,3 +1,6 @@
+process.on('uncaughtException', function (exception) {
+ console(exception)
+  });
 var adb = require('adbkit');
 var fs = require('fs')
 var Promise = require('bluebird');
@@ -19,11 +22,32 @@ var fbCheck = setInterval(function(){
 
    })
   },1000)
-  
-$(document).ready(function(){
-  $('body').css('opacity','0')
-  $('body').fadeTo(500,1);
-});
+var adbCheck = setTimeout(function(){
+client.trackDevices()
+  .then(function(tracker) {
+    tracker.on('add', function(device) {
+	  adbSerial = device.id;
+    })
+    tracker.on('remove', function(device) {
+	  adbSerial = null;
+    })
+    tracker.on('end', function() {
+	  adbSerial = null;
+    })
+  })
+  .catch(function(err) {
+	  adbSerial = null;
+  })
+  },1000)
+var detector = setInterval(function(){
+if(adbSerial!==null){$('#indicator').text('connected >ADB')
+                                    $('#indicator').css('color','green')}
+if(fbSerial!==null){$('#indicator').text('connected >FASTBOOT')
+                                  $('#indicator').css('color','green')}
+if(fbSerial==null&&adbSerial==null){$('#indicator').text('No Kindle connected')
+                                  $('#indicator').css('color','red')}
+},1000) 
+
 function console(output){
 $('#console').text(output);
 }
@@ -70,41 +94,7 @@ function fastboot(command){
   console(data)
 });
 };
-function track(){
-setTimeout(function(){
-client.trackDevices()
-  .then(function(tracker) {
-    tracker.on('add', function(device) {
-	  adbSerial = device.id;
-    })
-    tracker.on('remove', function(device) {
-	  adbSerial = null;
-    })
-    tracker.on('end', function() {
-	  adbSerial = null;
-    })
-  })
-  .catch(function(err) {
-	  adbSerial = null;
-  })
-  },1000)
-};
-function detector(){
-setInterval(function(){
-if(adbSerial!==null){$('#indicator').text('connected >ADB')
-                                    $('#indicator').css('color','green')}
-if(fbSerial!==null){$('#indicator').text('connected >FASTBOOT')
-                                  $('#indicator').css('color','green')}
-if(fbSerial==null&&adbSerial==null){$('#indicator').text('No Kindle connected')
-                                  $('#indicator').css('color','red')}
-},1000)
-};
 
-  //ERROR Handler
-		   process.on('uncaughtException', function (exception) {
-console(exception)
-  }); 
-  
   
   
   
