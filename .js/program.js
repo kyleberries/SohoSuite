@@ -11,15 +11,11 @@ var fbCheck = setInterval(function(){
 	//   if(output == '' || output == null){alert('test')}
 	   	   if(output != '' && output != null){
 	       fbSerial = output.substr(0,16);
-		   $('#fb').css('color','green')
 	       cmd('fastboot -i 0x1949 getvar product',function(code,output){
-		      if(output.match(/Soho/g) != 'Soho'){fbSerial = null;
-			                                      $('#fb').css('color','red')
-												  $('#fb').text('err')}
+		      if(output.match(/Soho/g) != 'Soho'){fbSerial = null;}
 		   })
 	   }
 	   else{fbSerial = null}
-	   $('#fb').css('color','red')
 
    })
   },1000)
@@ -68,39 +64,41 @@ client.listDevices()
     connsole(err.stack)
   })
 };
-function track(){
-setTimeout(function(){
-client.trackDevices()
-  .then(function(tracker) {
-    tracker.on('add', function(device) {
-      $('#adb').css('color','green')
-	  adbSerial = device.id;
-    })
-    tracker.on('remove', function(device) {
-      $('#adb').css('color','red')
-	  adbSerial = null;
-    })
-    tracker.on('end', function() {
-      $('#adb').text('err')
-	  $('#adb').css('color','red')
-	  adbSerial = null;
-    })
-  })
-  .catch(function(err) {
-      $('#adb').text('err')
-	  $('#adb').css('color','red')
-	  adbSerial = null;
-  })
-  },1000)
-};
 function fastboot(command){
    var fb = cmd('fastboot -i 0x1949 '+command,{async:true})
    fb.stdout.on('data', function(data) {
   console(data)
 });
 };
-
-
+function track(){
+setTimeout(function(){
+client.trackDevices()
+  .then(function(tracker) {
+    tracker.on('add', function(device) {
+	  adbSerial = device.id;
+    })
+    tracker.on('remove', function(device) {
+	  adbSerial = null;
+    })
+    tracker.on('end', function() {
+	  adbSerial = null;
+    })
+  })
+  .catch(function(err) {
+	  adbSerial = null;
+  })
+  },1000)
+};
+function detector(){
+setInterval(function(){
+if(adbSerial!==null){$('#indicator').text('connected >ADB')
+                                    $('#indicator').css('color','green')}
+if(fbSerial!==null){$('#indicator').text('connected >FASTBOOT')
+                                  $('#indicator').css('color','green')}
+if(fbSerial==null&&adbSerial==null){$('#indicator').text('No Kindle connected')
+                                  $('#indicator').css('color','red')}
+},1000)
+};
 
   //ERROR Handler
 		   process.on('uncaughtException', function (exception) {

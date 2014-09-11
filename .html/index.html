@@ -10,8 +10,8 @@
 	<!--end scripts-->
   </head>
   
-  <body onload='track()'>
-  <div id='adb' style='color:red'>ADB</div><div id='fb' style='color:red'>FASTBOOT</div>
+  <body onload='track();detector()'>
+  <div id='indicator' style='color:red'>No Kindle connected</div>
   <div id='console' class='console'>Console...</div>
     <input type='button' value='Root' class='tool' id='root' onclick="root1()" /><br />
     <input type='button' value='Reboot SoSu' class='tool' onclick="window.location.reload()" /><br />
