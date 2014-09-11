@@ -3,47 +3,34 @@ var fs = require('fs')
 var Promise = require('bluebird');
 var client = adb.createClient();
 var markdown = require( "markdown" ).markdown;
-var shell = require('shelljs');
+var cmd = require('shelljs').exec;
 var fbSerial = null;
 var adbSerial = null;
+var fbCheck = setInterval(function(){
+   cmd('fastboot -i 0x1949 devices',function(code,output){
+	//   if(output == '' || output == null){alert('test')}
+	   	   if(output != '' && output != null){
+	       fbSerial = output.substr(0,16);
+		   $('#fb').css('color','green')
+	       cmd('fastboot -i 0x1949 getvar product',function(code,output){
+		      if(output.match(/Soho/g) != 'Soho'){fbSerial = null;
+			                                      $('#fb').css('color','red')
+												  $('#fb').text('err')}
+		   })
+	   }
+	   else{fbSerial = null}
+	   $('#fb').css('color','red')
 
+   })
+  },1000)
+  
 $(document).ready(function(){
   $('body').css('opacity','0')
   $('body').fadeTo(500,1);
 });
-
 function console(output){
 $('#console').text(output);
 }
-function fastbootCheck(){
-setInterval(function(){
-   shell.exec('fastboot -i 0x1949 devices',function(code,output){
-       if(output != ''){
-	       fbSerial = output.substr(0,16);
-	       shell.exec('fastboot -i 0x1949 getvar product',function(code,output){
-		      if(output.match(/Soho/g) != 'Soho'){fbSerial = null;}
-		   })
-	   }
-
-   })
-  },5000)
-}
-/*function adbCheck(){
-client.listDevices()
-  .then(function(devices) {
-   if(devices !='' &&devices != null){
-    return Promise.filter(devices, function(device) {
-      return client.getProperties(device.id)
-        .then(function(properties) {
-		 	 dev = device.id;
-          var model = properties['ro.product.model'];
-		  if(model!='KFSOWI'){dev = null}
-        })
-    })
-  }
-  else {dev=null}
-  })
-}*/
 function adbShell(command){
 if(dev==null){throw Error('adbShell >No KFSOWI detected')};
    client.shell(dev,command,function(err,output){
@@ -82,42 +69,45 @@ client.listDevices()
   })
 };
 function track(){
+setTimeout(function(){
 client.trackDevices()
   .then(function(tracker) {
     tracker.on('add', function(device) {
-      $('#tracker').text('Device Detected in ADB mode', device.id);
+      $('#adb').css('color','green')
 	  adbSerial = device.id;
     })
     tracker.on('remove', function(device) {
-      $('#tracker').text('Device unplugged', device.id)
+      $('#adb').css('color','red')
 	  adbSerial = null;
     })
     tracker.on('end', function() {
-      $('#tracker').text('Tracking stopped')
+      $('#adb').text('err')
+	  $('#adb').css('color','red')
 	  adbSerial = null;
     })
   })
   .catch(function(err) {
-      $('#tracker').text('Something went wrong:', err.stack)
+      $('#adb').text('err')
+	  $('#adb').css('color','red')
 	  adbSerial = null;
   })
+  },1000)
+};
+function fastboot(command){
+   var fb = cmd('fastboot -i 0x1949 '+command,{async:true})
+   fb.stdout.on('data', function(data) {
+  console(data)
+});
 };
 
-function root(){
-alert('Please power Kindle on as usual, but plug into fastboot cable');
-if(adbSerial==null)throw Error('No device detected');
-client.reboot(dev);
-console('Please wait...');
-setTimeout(function(){
- if(fbSerial!=null){
-    shell.exec('fastboot -i 0x1949 continue')
-	}
- else{console('No device detected')}
-},5000)
-};
+
 
   //ERROR Handler
 		   process.on('uncaughtException', function (exception) {
 $('#console').css('color','red');
 console(exception)
   }); 
+  
+  
+  
+  
