@@ -5,7 +5,7 @@ var client = adb.createClient();
 var markdown = require( "markdown" ).markdown;
 var shell = require('shelljs');
 var fbSerial = null;
-var dev = null;
+var adbSerial = null;
 
 $(document).ready(function(){
   $('body').css('opacity','0')
@@ -16,6 +16,7 @@ function console(output){
 $('#console').text(output);
 }
 function fastbootCheck(){
+setInterval(function(){
    shell.exec('fastboot -i 0x1949 devices',function(code,output){
        if(output != ''){
 	       fbSerial = output.substr(0,16);
@@ -25,6 +26,7 @@ function fastbootCheck(){
 	   }
 
    })
+  },5000)
 }
 /*function adbCheck(){
 client.listDevices()
@@ -43,10 +45,10 @@ client.listDevices()
   })
 }*/
 function adbShell(command){
-if(dev==null){throw Error('adb >No KFSOWI detected')};
+if(dev==null){throw Error('adbShell >No KFSOWI detected')};
    client.shell(dev,command,function(err,output){
       output.on('data',function(chunk){
-	    console('ADB> '+chunk)
+	    console('adbShell >'+chunk)
 	  })
    })
 };
@@ -84,35 +86,34 @@ client.trackDevices()
   .then(function(tracker) {
     tracker.on('add', function(device) {
       $('#tracker').text('Device Detected in ADB mode', device.id);
-	  dev = device.id;
+	  adbSerial = device.id;
     })
     tracker.on('remove', function(device) {
       $('#tracker').text('Device unplugged', device.id)
-	  dev = null;
+	  adbSerial = null;
     })
     tracker.on('end', function() {
       $('#tracker').text('Tracking stopped')
-	  dev = null;
+	  adbSerial = null;
     })
   })
   .catch(function(err) {
       $('#tracker').text('Something went wrong:', err.stack)
-	  dev = null;
+	  adbSerial = null;
   })
 };
 
 function root(){
 alert('Please power Kindle on as usual, but plug into fastboot cable');
-if(dev==null)throw Error('No device detected');
+if(adbSerial==null)throw Error('No device detected');
 client.reboot(dev);
 console('Please wait...');
-setTimeout(fastbootCheck(),5000);
 setTimeout(function(){
  if(fbSerial!=null){
     shell.exec('fastboot -i 0x1949 continue')
 	}
  else{console('No device detected')}
-},7000)
+},5000)
 };
 
   //ERROR Handler
