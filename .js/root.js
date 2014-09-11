@@ -16,6 +16,4 @@ $('#root').attr("onclick","root1()");
 console('Verify Kindle is back in adb mode, adb the adb indicator above is green ,then click next.');
 },1200)
 };
-function root3(){
 
-};
