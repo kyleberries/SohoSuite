@@ -46,7 +46,7 @@ if(fbSerial!==null){$('#indicator').text('connected >FASTBOOT')
                                   $('#indicator').css('color','green')}
 if(fbSerial==null&&adbSerial==null){$('#indicator').text('No Kindle connected')
                                   $('#indicator').css('color','red')}
-},1000) 
+},2000) 
 
 function console(output){
 $('#console').text(output);
