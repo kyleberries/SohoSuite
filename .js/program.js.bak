@@ -90,11 +90,12 @@ client.listDevices()
   })
 };
 function fastboot(command){
-   if (fbSerial==null) throw Error('fastboot No Kindle Detected')
-   cmd('fastboot -i 0x1949 '+command,function(code,output){
-   if(output=='' || output==null) throw Error(command,output)
-   if(code !== 0) throw Error('Unknown Error')
-   console(output)
-   })
+   var fb = cmd('fastboot -i 0x1949 '+command,{async:true})
+   fb.stdout.on('data', function(data) {
+  console(data)
+});
 };
+
+  
+  
   

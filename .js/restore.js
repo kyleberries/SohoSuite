@@ -1,6 +1,7 @@
 //flash 11310 kernel/recovery and minisystem
 function restore1(){
 alert('Please power Kindle off, and plug into fastboot cable');
+fbCheck();
 if(fbSerial==null){throw Error('fastboot >No device detected');
                     $('#restore').attr("onclick","restore1()").attr("value","Restore");}
 fastboot('flash boot ./.resources/11310/boot.img');
