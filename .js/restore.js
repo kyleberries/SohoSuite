@@ -2,8 +2,7 @@
 function restore1(){
 alert('Please power Kindle off, and plug into fastboot cable');
 fbCheck();
-if(fbSerial==null){throw Error('fastboot >No device detected');
-                    $('#restore').attr("onclick","restore1()").attr("value","Restore");}
+if(fbSerial==null){$('#restore').attr("onclick","restore1()").attr("value","Restore");}
 fastboot('getvar product');
 fastboot('continue');
 };
