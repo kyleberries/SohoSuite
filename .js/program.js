@@ -52,7 +52,7 @@ function console(output){
 $('#console').text(output);
 }
 function adbShell(command){
-if(adbSerial==null){throw Error('adbShell >No KFSOWI detected')};
+if(adbSerial==null){throw Error('adb >No KFSOWI detected')};
    client.shell(adbSerial,command,function(err,output){
       output.on('data',function(chunk){
 	    console('adbShell >'+chunk)
@@ -60,7 +60,7 @@ if(adbSerial==null){throw Error('adbShell >No KFSOWI detected')};
    })
 };
 function adbPush(local,remote){
-if(adbSerial == null){throw Error('No KFSOWI detected')}
+if(adbSerial == null){throw Error('adb >No KFSOWI detected')}
 client.listDevices()
   .then(function(devices) {
     return Promise.map(devices, function(device) {
@@ -90,7 +90,7 @@ client.listDevices()
 };
 function fastboot(command){
    cmd('fastboot -i 0x1949 '+command,function(code,output){
-   if(output=='' || output==null) throw Error(command,output)
+   if(output=='' || output==null) throw Error('fastboot >'+command+' '+output)
    if(code !== 0) throw Error('Unknown Error')
    console(output)
    })
