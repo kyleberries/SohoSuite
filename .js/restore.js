@@ -4,16 +4,11 @@ alert('Please power Kindle off, and plug into fastboot cable');
 fbCheck();
 if(fbSerial==null){throw Error('fastboot >No device detected');
                     $('#restore').attr("onclick","restore1()").attr("value","Restore");}
-fastboot('flash boot ./.resources/11310/boot.img');
-fastboot('flash recovery ./.resources/11310/recovery.img');
-fastboot('flash system ./.resources/restore/minisys.img');
+fastboot('getvar product');
 fastboot('continue');
-console('Please wait until device reconnects in adb mode above before continuing.')
-$('#restore').attr("onclick","restore2()").attr("value","Next");
-console('Verify Kindle is in fastboot mode, and the fastboot indicator above is green ,then click next.');
 };
 
-//run wipe, and restore
+/*run wipe, and restore
 function restore2(){
 if(adbSerial==null){throw Error('fastboot >No device detected');
                     $('#restore').attr("onclick","restore1()").attr("value","Restore");}
@@ -33,4 +28,4 @@ function restore3(){
 adbShell('su -c reboot recovery');
 console('Kindle will display upgrade screen, and restore to stock.');
 $('#restore').attr("onclick","restore1()").attr("value","Restore");
-};
+};*/
