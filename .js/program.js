@@ -2,12 +2,20 @@ process.on('uncaughtException', function (exception) {
  console(exception)
   });
 var adb = require('adbkit');
-var Promise = require('bluebird');
 var client = adb.createClient();
-var markdown = require( "markdown" ).markdown;
+var Promise = require('bluebird');
+var markdown = require('markdown').markdown;
 var cmd = require('shelljs').exec;
 var fbSerial = fbCheck();
 var adbSerial = null;
+var detector = setInterval(function(){
+if(adbSerial!==null){$('#indicator').text('connected >ADB')
+                                    $('#indicator').css('color','green')}
+if(fbSerial!==null){$('#indicator').text('connected >FASTBOOT')
+                                  $('#indicator').css('color','green')}
+if(fbSerial==null&&adbSerial==null){$('#indicator').text('No Kindle connected')
+                                  $('#indicator').css('color','red')}
+},500)
 var adbCheck = setTimeout(function(){
 client.trackDevices()
   .then(function(tracker) {
@@ -24,23 +32,14 @@ client.trackDevices()
   .catch(function(err) {
 	  adbSerial = null;
   })
-  },1000)
-var detector = setInterval(function(){
-if(adbSerial!==null){$('#indicator').text('connected >ADB')
-                                    $('#indicator').css('color','green')}
-if(fbSerial!==null){$('#indicator').text('connected >FASTBOOT')
-                                  $('#indicator').css('color','green')}
-if(fbSerial==null&&adbSerial==null){$('#indicator').text('No Kindle connected')
-                                  $('#indicator').css('color','red')}
-},2000) 
+  },200) 
 function fbCheck(){ 
-var fbDevice = null;
+var fbDevice;
    cmd('fastboot -i 0x1949 devices',function(code,output){
-	//   if(output == '' || output == null){alert('test')}
-	   	   if(output != '' && output != null){
+	   	   if(output != null){
 	       fbDevice = output.substr(0,16);
 	       cmd('fastboot -i 0x1949 getvar product',function(code,output){
-		      if(output.match(/Soho/g) != 'Soho'){fbDevice = null;}
+		      if(output.match(/Soho/g) != 'Soho'){fbDevice = null}
 		   })
 	   }
 	   else{fbDevice = null}
@@ -55,7 +54,7 @@ function adbShell(command){
 if(adbSerial==null){throw Error('adb >No KFSOWI detected')};
    client.shell(adbSerial,command,function(err,output){
       output.on('data',function(chunk){
-	    console('adbShell >'+chunk)
+	    console('adb >'+chunk)
 	  })
    })
 };
