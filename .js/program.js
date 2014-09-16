@@ -55,24 +55,24 @@ function console(output){
 $('#console').text(output);
 }
 function adbShell(command){
-if(dev==null){throw Error('adbShell >No KFSOWI detected')};
-   client.shell(dev,command,function(err,output){
+if(adbSerial==null){throw Error('adbShell >No KFSOWI detected')};
+   client.shell(adbSerial,command,function(err,output){
       output.on('data',function(chunk){
 	    console('adbShell >'+chunk)
 	  })
    })
 };
 function adbPush(local,remote){
-if(dev == null){throw Error('No KFSOWI detected')}
+if(adbSerial == null){throw Error('No KFSOWI detected')}
 client.listDevices()
   .then(function(devices) {
     return Promise.map(devices, function(device) {
-      return client.push(device.id,local,remote)
+      return client.push(adbSerial,local,remote)
         .then(function(transfer) {
           return new Promise(function(resolve, reject) {
             transfer.on('progress', function(stats) {
               console('[%s] Pushed %d bytes so far',
-                device.id,
+                adbSerial,
                 stats.bytesTransferred)
             })
             transfer.on('end', function() {
