@@ -7,7 +7,7 @@ var Promise = require('bluebird');
 var client = adb.createClient();
 var markdown = require( "markdown" ).markdown;
 var cmd = require('shelljs').exec;
-var fbSerial = null;
+var fbSerial = fbCheck();
 var adbSerial = null;
 
 var adbCheck = setTimeout(function(){
@@ -36,17 +36,19 @@ if(fbSerial==null&&adbSerial==null){$('#indicator').text('No Kindle connected')
                                   $('#indicator').css('color','red')}
 },2000) 
 function fbCheck(){ 
+var fbDevice = null;
    cmd('fastboot -i 0x1949 devices',function(code,output){
 	//   if(output == '' || output == null){alert('test')}
 	   	   if(output != '' && output != null){
-	       fbSerial = output.substr(0,16);
+	       fbDevice = output.substr(0,16);
 	       cmd('fastboot -i 0x1949 getvar product',function(code,output){
-		      if(output.match(/Soho/g) != 'Soho'){fbSerial = null;}
+		      if(output.match(/Soho/g) != 'Soho'){fbDevice = null;}
 		   })
 	   }
-	   else{fbSerial = null}
+	   else{fbDevice = null}
 
    })
+   return fbDevice;
 };
 
 function console(output){
