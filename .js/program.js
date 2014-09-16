@@ -2,14 +2,12 @@ process.on('uncaughtException', function (exception) {
  console(exception)
   });
 var adb = require('adbkit');
-var fs = require('fs')
 var Promise = require('bluebird');
 var client = adb.createClient();
 var markdown = require( "markdown" ).markdown;
 var cmd = require('shelljs').exec;
 var fbSerial = fbCheck();
 var adbSerial = null;
-
 var adbCheck = setTimeout(function(){
 client.trackDevices()
   .then(function(tracker) {
@@ -50,7 +48,6 @@ var fbDevice = null;
    })
    return fbDevice;
 };
-
 function console(output){
 $('#console').text(output);
 }
@@ -92,7 +89,6 @@ client.listDevices()
   })
 };
 function fastboot(command){
-   if (fbSerial==null) throw Error('fastboot No Kindle Detected')
    cmd('fastboot -i 0x1949 '+command,function(code,output){
    if(output=='' || output==null) throw Error(command,output)
    if(code !== 0) throw Error('Unknown Error')
