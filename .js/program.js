@@ -97,4 +97,3 @@ function fastboot(command){
    console(output)
    })
 };
-  
